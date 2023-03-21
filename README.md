@@ -7,6 +7,9 @@
 <div>
 <a href="https://codewars.com/users/artemiosdev"><img src="https://www.codewars.com/users/artemiosdev/badges/large" align="left"></img></a>
 </div>
+<br>
+<hr>
+<br>
 
 
 ---
