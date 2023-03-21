@@ -5,11 +5,13 @@
 <h1><a href="https://www.codewars.com/users/artemiosdev">Codewars</a><a href="https://gph.is/st/mqqDGdx"><img src="https://git.io/JMd4a" height="44" align="right"></a></h1>
 
 <div>
-<a href="https://codewars.com/users/artemiosdev"><img src="https://codewars.com/users/artemiosdev/badges/micro" align="left"></img></a>
+<a href="https://codewars.com/users/artemiosdev"><img src="https://www.codewars.com/users/artemiosdev/badges/large" align="left"></img></a>
 </div>
 
 
-## 8 kyu
+---
+
+### 8 kyu
 
 ### [Sum The Strings](https://www.codewars.com/kata/5966e33c4e686b508700002d/swift)
 
@@ -126,7 +128,81 @@ Mетод `.sort` сортирует оригинальный массив, а �
 
 ---
 
-### 
+### [Stringy Strings](https://www.codewars.com/kata/563b74ddd19a3ad462000054)
+
+Write me a function stringy that takes a size and returns a string of alternating '1s' and '0s'.
+
+The string should start with a 1.
+
+A string with size 6 should return : `'101010'.
+
+With size 4 should return : `'1010'`.
+
+With size 12 should return : `'101010101010'`.
+
+The size will always be positive and will only use whole numbers.
+
+My solution:
+```swift
+func stringy(_ size: Int) -> String {
+    var result = [String]()
+    var i = 0
+    while i < size {
+        i += 1
+        result.append("\(i % 2)")
+    }
+    return result.joined()
+}
+
+print(stringy(1)) // "1"
+print(stringy(2)) // "10"
+print(stringy(3)) // "101"
+```
+
+Other solutions:
+```swift
+func stringy(_ size: Int) -> String {
+    if size % 2 == 0 {
+        return String(repeating: "10", count: size / 2)
+    } else {
+        return "1" + String(repeating: "01", count: size / 2)
+    }
+}
+```
+
+```swift
+func stringy(_ size: Int) -> String {
+    var newString = ""
+    for i in 1...size {
+        newString += "\(i % 2)"
+    }
+    return newString
+}
+```
+
+
+---
+
+### [Is he gonna survive?](https://www.codewars.com/kata/59ca8246d751df55cc00014c)
+
+A hero is on his way to the castle to complete his mission. However, he's been told that the castle is surrounded with a couple of powerful dragons! each dragon takes 2 bullets to be defeated, our hero has no idea how many bullets he should carry.. Assuming he's gonna grab a specific given number of bullets and move forward to fight another specific given number of dragons, will he survive?
+
+Return True if yes, False otherwise 
+
+My solution:
+```swift
+func hero(bullets: Int, dragons: Int) -> Bool {
+    return bullets >= dragons * 2
+}
+
+print(hero(bullets: 4, dragons: 2)) // true
+print(hero(bullets: 1, dragons: 3)) // false
+print(hero(bullets: 11, dragons: 5)) // true
+```
+
+---
+
+### []()
 
 
 
@@ -135,22 +211,13 @@ My solution:
 
 ```
 
-Other solutions:
 ```swift
 
 ```
 
-```swift
+----
 
-```
-
-```bash
-
-```
-
----
-
-### 
+### []()
 
 
 
@@ -159,17 +226,39 @@ My solution:
 
 ```
 
-Other solutions:
 ```swift
-
-```
-
-```swift
-
-```
-
-```bash
 
 ```
 
 ---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+```swift
+
+```
+
+
+
