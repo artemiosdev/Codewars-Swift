@@ -1,6 +1,13 @@
+<!--
 <h1><a href="https://www.codewars.com/users/artemiosdev">Codewars</a><img src="images/codewars.gif" height="44" align="right"></h1>
+-->
 
+<h1><a href="https://www.codewars.com/users/artemiosdev">Codewars</a><a href="https://gph.is/st/mqqDGdx"><img src="https://git.io/JMd4a" height="44" align="right"></a></h1>
+
+<div>
 <a href="https://codewars.com/users/artemiosdev"><img src="https://codewars.com/users/artemiosdev/badges/micro" align="left"></img></a>
+</div>
+
 
 ## 8 kyu
 
