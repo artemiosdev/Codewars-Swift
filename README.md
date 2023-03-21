@@ -1,6 +1,6 @@
-### [Codewars](https://www.codewars.com/users/artemiosdev) <img src="images/codewars.gif" height="44" align="right">
+<h1><a href="https://www.codewars.com/users/artemiosdev">Codewars</a><img src="images/codewars.gif" height="44" align="right"></h1>
 
-<a href="https://codewars.com/users/artemiosdev"><img src="https://codewars.com/users/artemiosdev/badges/micro" align="right"></img></a>
+<a href="https://codewars.com/users/artemiosdev"><img src="https://codewars.com/users/artemiosdev/badges/micro" align="left"></img></a>
 
 ## 8 kyu
 
