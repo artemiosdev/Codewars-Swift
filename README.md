@@ -12,7 +12,6 @@
 <br>
 
 
----
 
 ### 8 kyu
 
@@ -205,32 +204,153 @@ print(hero(bullets: 11, dragons: 5)) // true
 
 ---
 
-### []()
+### [Get Planet Name By ID](https://www.codewars.com/kata/515e188a311df01cba000003)
 
+The function is not returning the correct values. Can you figure out why?
 
+Example (Input --> Output ):
+
+`3 --> "Earth"`
 
 My solution:
 ```swift
-
-```
-
-```swift
-
+func getPlanetName(_ id: Int) -> String {
+  var name:String
+  switch id {
+    case 1: 
+      name = "Mercury"
+    case 2: 
+      name = "Venus"
+    case 3: 
+      name = "Earth"
+    case 4: 
+      name = "Mars"
+    case 5: 
+      name = "Jupiter"
+    case 6: 
+      name = "Saturn"
+    case 7: 
+      name = "Uranus"
+    case 8: 
+      name = "Neptune"
+    default:
+      name = ""
+  } 
+  return name
+}
 ```
 
 ----
 
-### []()
+### [Quarter of the year](https://www.codewars.com/kata/5ce9c1000bab0b001134f5af)
 
+Given a month as an integer from 1 to 12, return to which quarter of the year it belongs as an integer number.
 
+For example: month 2 (February), is part of the first quarter; month 6 (June), is part of the second quarter; and month 11 (November), is part of the fourth quarter.
+
+Constraint:
+
+`1 <= month <= 12`
 
 My solution:
 ```swift
+func quarter(of month: Int) -> Int {
+     switch month {
+    case 1...3: return 1
+    case 4...6: return 2
+    case 7...9: return 3
+    case 10...12: return 4
+    default: print("error")
+    }
+  return month
+}
 
+print(quarter(of: 8)) // 3
+print(quarter(of: 3)) // 1
+print(quarter(of: 11)) // 4
+```
+
+Other solutions:
+```swift
+func quarter(of month: Int) -> Int {
+    let months = [
+        1: [1, 2, 3],
+        2: [4, 5, 6],
+        3: [7, 8, 9],
+        4: [10, 11, 12]
+    ]
+    for (key, values) in months where values.contains(month) {
+        return key
+    }
+    return 0
+}
+```
+
+---
+
+### [A wolf in sheep's clothing](https://www.codewars.com/kata/5c8bfa44b9d1192e1ebd3d15)
+
+Warn the sheep in front of the wolf that it is about to be eaten. Remember that you are standing at the front of the queue which is at the end of the array:
+
+`[sheep, sheep, sheep, sheep, sheep, wolf, sheep, sheep]      (YOU ARE HERE AT THE FRONT OF THE QUEUE)`
+
+   `7      6      5      4      3            2      1`
+
+If the wolf is the closest animal to you, return "Pls go away and stop eating my sheep". Otherwise, return "Oi! Sheep number N! You are about to be eaten by a wolf!" where N is the sheep's position in the queue.
+
+Note: there will always be exactly one wolf in the array.
+
+Examples:
+
+`Input: ["sheep", "sheep", "sheep", "wolf", "sheep"]`
+
+`Output: "Oi! Sheep number 1! You are about to be eaten by a wolf!"`
+
+`Input: ["sheep", "sheep", "wolf"]`
+
+`Output: "Pls go away and stop eating my sheep"`
+
+My solution:
+```swift
+func warnTheSheep(_ queue: [String]) -> String {
+    var alertString = ""
+    let numberWolf = Array(queue.reversed()).firstIndex(where: { $0 == "wolf" })!
+    if numberWolf > 0 {
+        alertString = "Oi! Sheep number \(numberWolf)! You are about to be eaten by a wolf!"
+    } else {
+        alertString = "Pls go away and stop eating my sheep"
+    }
+    return alertString
+}
+```
+
+Other solutions:
+```swift
+func warnTheSheep(_ queue: [String]) -> String {
+    let num = queue.count - queue.firstIndex(of: "wolf")! - 1
+    return num == 0
+    ? "Pls go away and stop eating my sheep"
+    : "Oi! Sheep number \(num)! You are about to be eaten by a wolf!"
+}
 ```
 
 ```swift
+func warnTheSheep(_ queue: [String]) -> String {
+    let wolfIndex = queue.firstIndex(of: "wolf") ?? 0
+    return queue.last == "wolf"
+    ? "Pls go away and stop eating my sheep"
+    : "Oi! Sheep number \(queue.count - wolfIndex - 1)! You are about to be eaten by a wolf!"
+}
 
+warnTheSheep(["sheep", "sheep", "sheep", "sheep", "sheep", "wolf", "sheep", "sheep"])
+// "Oi! Sheep number 2! You are about to be eaten by a wolf!"
+
+warnTheSheep(["sheep", "wolf", "sheep", "sheep", "sheep", "sheep", "sheep"])
+// "Oi! Sheep number 5! You are about to be eaten by a wolf!"
+
+warnTheSheep(["sheep", "sheep", "wolf"]) // "Pls go away and stop eating my sheep"
+
+warnTheSheep(["wolf"]) // "Pls go away and stop eating my sheep"
 ```
 
 ---
@@ -244,21 +364,7 @@ My solution:
 
 ```
 
-```swift
-
-```
-
----
-
-### []()
-
-
-
-My solution:
-```swift
-
-```
-
+Other solutions:
 ```swift
 
 ```
