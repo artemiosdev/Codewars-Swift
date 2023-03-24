@@ -355,6 +355,262 @@ warnTheSheep(["wolf"]) // "Pls go away and stop eating my sheep"
 
 ---
 
+### [Expressions Matter](https://www.codewars.com/kata/5ae62fcf252e66d44d00008e)
+
+Given three integers `a ,b ,c`, return the largest number obtained after inserting the following operators and brackets: `+, *, ()`
+
+In other words , try every combination of `a,b,c` with `[*+()]` , and return the Maximum Obtained
+
+Example:
+
+With the numbers are 1, 2 and 3 , here are some ways of placing signs and brackets:
+
+```bash
+1 * (2 + 3) = 5
+1 * 2 * 3 = 6
+1 + 2 * 3 = 7
+(1 + 2) * 3 = 9
+```
+
+So the maximum value that you can obtain is 9.
+
+Notes:
+
+- The numbers are always positive.
+- The numbers are in the range (1  ≤  a, b, c  ≤  10).
+- You can use the same operation more than once.
+- It's not necessary to place all the signs and brackets.
+- Repetition in numbers may occur .
+- You cannot swap the operands. For instance, in the given example you cannot get expression `(1 + 3) * 2 = 8`
+
+**Input >> Output Examples:**
+
+`expressionsMatter(1,2,3)  ==>  return 9`
+
+Explanation:
+After placing signs and brackets, the Maximum value obtained from the expression `(1+2) * 3 = 9`.
+
+or 
+
+`expressionsMatter(1,1,1)  ==>  return 3`
+Explanation:
+After placing signs, the Maximum value obtained from the expression is `1 + 1 + 1 = 3`.
+
+or 
+
+`expressionsMatter(9,1,1)  ==>  return 18`
+
+`9 * (1+1) = 18`
+
+My solution:
+```swift
+func expressionMatter(_ a: Int, _ b: Int, _ c: Int) -> Int {
+    var results: [Int] = []
+    results.append(a * (b + c))
+    results.append(a * b * c)
+    results.append(a + b * c)
+    results.append((a + b) * c)
+    results.append(a + b + c)
+    return results.max()!
+}
+
+print(expressionMatter(2, 1, 2)) // 6
+print(expressionMatter(2, 1, 1)) // 4
+print(expressionMatter(1, 1, 1)) // 3
+print(expressionMatter(1, 2, 3)) // 9
+print(expressionMatter(1, 3, 1)) // 5
+print(expressionMatter(2, 2, 2)) // 8
+```
+
+Other solutions:
+```swift
+func expressionMatter(_ a: Int, _ b: Int, _ c: Int) -> Int {
+  return max(a + b + c, (a + b) * c, a * (b + c),  a * b * c)
+}
+```
+
+```swift
+func expressionMatter(_ a: Int, _ b: Int, _ c: Int) -> Int {
+    let possibleValues = [
+      a * (b + c),
+      a * b * c,
+      a + b * c,
+      a * b + c,
+      (a + b) * c,
+      a + b + c
+    ]
+    return possibleValues.max() ?? 3
+}
+```
+
+---
+
+### [Century From Year](https://www.codewars.com/kata/5a3fe3dde1ce0e8ed6000097)
+
+The first century spans from the year 1 up to and including the year 100, the second century - from the year 101 up to and including the year 200, etc.
+
+Task:
+Given a year, return the century it is in.
+
+Examples:
+
+```bash
+1705 --> 18
+1900 --> 19
+1601 --> 17
+2000 --> 20
+```
+
+My solution:
+```swift
+func century(_ year: Int) -> Int {
+    if year < 100 {
+        return 1
+    } else if year % 100 == 0 {
+        return year / 100
+    }
+    return (year / 100) + 1
+}
+```
+
+Other solutions:
+```swift
+func century(_ year: Int) -> Int {
+    let century = year % 100 == 0 ? (year / 100) : (year / 100) + 1
+    return century
+}
+```
+
+---
+
+### [Reversed sequence](https://www.codewars.com/kata/5a00e05cc374cb34d100000d)
+
+Build a function that returns an array of integers from n to 1 where n>0.
+
+Example : `n=5 --> [5,4,3,2,1]`
+
+My solution:
+```swift
+func reverseSeq(n: Int) -> [Int] {
+    var result: [Int] = []
+    for i in 1...n {
+        result.append(i)
+    }
+    return result.reversed()
+}
+print(reverseSeq(n: 5)) //  [5,4,3,2,1]
+```
+
+Other solutions:
+```swift
+func reverseSeq(n: Int) -> [Int] {
+  return (1...n).reversed()
+}
+// or
+// подробнее func reversed() -> [Self.Element]
+// 0(n)
+
+func reverseSeq(n: Int) -> [Int] {
+  let r = 1...n
+  return r.reversed()
+}
+```
+
+---
+
+### [Get Nth Even Number](https://www.codewars.com/kata/5933a1f8552bc2750a0000ed)
+
+Return the Nth Even Number
+
+Example(Input --> Output)
+
+```bash
+1 --> 0 (the first even number is 0)
+3 --> 4 (the 3rd even number is 4 (0, 2, 4))
+100 --> 198
+1298734 --> 2597466
+```
+
+The input will not be 0.
+
+My solution:
+```swift
+func nthEven(_ n: Int) -> Int {
+    return 2 * n - 2
+}
+
+print(nthEven(1))  // 0
+print(nthEven(2))  // 2
+print(nthEven(3))  // 4
+print(nthEven(100))  // 198
+print(nthEven(1298734))  // 2597466
+```
+
+---
+
+### [Find the first non-consecutive number](https://www.codewars.com/kata/58f8a3a27a5c28d92e000144)
+
+Your task is to find the first element of an array that is not consecutive.
+
+By not consecutive we mean not exactly 1 larger than the previous element of the array.
+
+E.g. If we have an array `[1,2,3,4,6,7,8]` then 1 then 2 then 3 then 4 are all consecutive but 6 is not, so that's the first non-consecutive number.
+
+If the whole array is consecutive then `return null^2`.
+
+The array will always have at least 2 elements^1 and all elements will be numbers. The numbers will also all be unique and in ascending order. The numbers could be positive or negative and the first non-consecutive could be either to
+
+My solution:
+
+```swift
+func firstNonConsecutive (_ arr: [Int]) -> Int? {
+    let sortedArray = arr.sorted()
+    var result = sortedArray.first ?? 0
+    for i in sortedArray {
+        if i - result > 1 {
+            result = i
+            return result
+        }
+        result = i
+    }
+    if result == sortedArray.last {
+        return nil
+    } else {
+        return result
+    }
+}
+```
+
+Other solutions:
+```swift
+func firstNonConsecutive (_ arr: [Int]) -> Int? {
+    for i in 1..<arr.count where arr[i] - arr[i-1] > 1 {
+        return arr[i]
+    }
+    return nil
+}
+
+print(firstNonConsecutive([1,2,3,4,6,7,8]))  // 6
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
 ### []()
 
 
