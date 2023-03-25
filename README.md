@@ -595,9 +595,136 @@ print(firstNonConsecutive([1,2,3,4,6,7,8]))  // 6
 
 ---
 
+### [Difference of Volumes of Cuboids](https://www.codewars.com/kata/58cb43f4256836ed95000f97)
+
+In this simple exercise, you will create a program that will take two lists of integers, a and b. Each list will consist of 3 positive integers above 0, representing the dimensions of cuboids a and b. You must find the difference of the cuboids' volumes regardless of which is bigger.
+
+For example, if the parameters passed are `([2, 2, 3], [5, 4, 1])`, the volume of a is 12 and the volume of b is 20. Therefore, the function should return 8.
+
+
+My solution:
+```swift
+func findDifference(_ a: [Int], _ b: [Int]) -> Int {
+    var sum1 = 1
+    var sum2 = 1
+    
+    for i in a {
+        sum1 *= i
+    }
+    for i in b {
+        sum2 *= i
+    }
+    
+    if sum1 >= sum2{
+        return sum1 - sum2
+    } else {
+        return sum2 - sum1
+    }
+}
+findDifference([3, 2, 5], [1, 4, 4]) // 14
+findDifference([9, 7, 2], [5, 2, 2]) // 106
+```
+
+Other solutions:
+```swift
+func findDifference(_ a: [Int], _ b: [Int]) -> Int {
+    return a.reduce(1,*) - b.reduce(1,*)
+}
+```
+
+---
+
+### [Simple multiplication](https://www.codewars.com/kata/583710ccaa6717322c000105)
+
+This kata is about multiplying a given number by 8 if it is an even number and by 9 otherwise.
+
+My solution:
+```swift
+func simpleMultiplication(_ num: Int) -> Int {
+  return num % 2 == 0 ? num * 8 : num * 9
+}
+```
+
+Other solutions:
+```swift
+func simpleMultiplication(_ num: Int) -> Int{
+        return num * (num % 2 + 8)
+}
+
+// or
+
+func simpleMultiplication(_ num: Int) -> Int {
+  num.isMultiple(of: 2) ? num * 8 : num * 9 
+}
+```
+
+---
+
+### [Switch it Up!](https://www.codewars.com/kata/5808dcb8f0ed42ae34000031)
+
+When provided with a number between 0-9, return it in words.
+
+My solution:
+```swift
+func switchItUp(_ number: Int) -> String {
+    switch number {
+    case 0:
+        return "Zero"
+    case 1:
+        return "One"
+    case 2:
+        return "Two"
+    case 3:
+        return "Three"
+    case 4:
+        return "Four"
+    case 5:
+        return "Five"
+    case 6:
+        return "Six"
+    case 7:
+        return "Seven"
+    case 8:
+        return "Eight"
+    case 9:
+        return "Nine"
+    default:
+        return "Wrong input"
+    }
+}
+
+print(switchItUp(8)) // Eight
+```
+
+Other solutions:
+```swift
+func switchItUp(_ number: Int) -> String {
+    let array = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"]
+    return array[number]
+}
+```
+
+```swift
+import Foundation 
+
+func switchItUp(_ number: Int) -> String {
+  let formatter = NumberFormatter()
+  formatter.numberStyle = NumberFormatter.Style.spellOut
+  return formatter.string(from: NSNumber(value: number))!.capitalized
+}
+```
+
+```swift
+import Foundation
+
+func switchItUp(_ number: Int) -> String {
+  return NumberFormatter.localizedString(from: number as NSNumber, number: .spellOut).capitalized
+}
+```
+
+---
+
 ### []()
-
-
 
 My solution:
 ```swift
@@ -605,6 +732,10 @@ My solution:
 ```
 
 Other solutions:
+```swift
+
+```
+
 ```swift
 
 ```
@@ -613,7 +744,23 @@ Other solutions:
 
 ### []()
 
+My solution:
+```swift
 
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
 
 My solution:
 ```swift
@@ -625,5 +772,98 @@ Other solutions:
 
 ```
 
+```swift
+
+```
+
+---
+
+### []()
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
 
 
