@@ -11,8 +11,6 @@
 <hr>
 <br>
 
-
-
 ### 8 kyu
 
 ### [Sum The Strings](https://www.codewars.com/kata/5966e33c4e686b508700002d/swift)
@@ -965,7 +963,153 @@ func fakeBin(digits: String) -> String {
 
 ---
 
+### [You only need one - Beginner](https://www.codewars.com/kata/57cc975ed542d3148f00015b)
+
+You will be given an array `a` and a value `x`. All you need to do is check whether the provided array contains the value.
+
+The type of `a` and `x` can be `String` or `Int`.
+
+Return true if the array contains the value, false if not.
+
+My solution:
+```swift
+func check<T: Equatable>(_ a: [T], _ x: T) -> Bool {
+    if a.contains(x) {
+        return true
+    } else {
+        return false
+    }
+}
+print(check(["t", "e", "s", "t"], "e")) //true
+```
+
+Other solutions:
+```swift
+func check<T: Equatable>(_ a: [T], _ x: T) -> Bool {
+    return a.contains(x)
+}
+
+// or
+func check<T: Equatable>(_ a: [T], _ x: T) -> Bool {
+    return a.contains(where: { $0 == x})
+}
+```
+
+---
+
+### [Calculate BMI](https://www.codewars.com/kata/57a429e253ba3381850000fb)
+
+Write function bmi that calculates body mass index (`bmi = weight / (height * height)`).
+
+```bash
+if bmi <= 18.5 return "Underweight"
+if bmi <= 25.0 return "Normal"
+if bmi <= 30.0 return "Overweight"
+if bmi > 30 return "Obese"
+```
+
+My solution:
+```swift
+func bmi(_ weight: Int, _ height: Double) -> String {
+    let bmiValue = Double(weight) / (height * height)
+    var stringResult = ""
+    if bmiValue <= 18.5 { stringResult = "Underweight" }
+    else if bmiValue <= 25.0 { stringResult = "Normal" }
+    else if bmiValue <= 30.0 { stringResult = "Overweight" }
+    else if bmiValue > 30 { stringResult = "Obese"}
+    return stringResult
+}
+```
+
+Other solutions:
+```swift
+enum BMIKind: CustomStringConvertible {
+    case underweight
+    case normal
+    case overweight
+    case obese
+    
+    var description: String {
+        switch self {
+        case .underweight:
+            return "Underweight"
+        case .normal:
+            return "Normal"
+        case .overweight:
+            return "Overweight"
+        case .obese:
+            return "Obese"
+        }
+    }
+
+    init(bmiIndex: Double) {
+        if bmiIndex <= 18.5 {
+            self = .underweight
+        } else if bmiIndex <= 25.0 {
+            self = .normal
+        } else if bmiIndex <= 30.0 {
+            self = .overweight
+        } else {
+            self = .obese
+        }
+    }
+}
+
+struct BMIIndex {
+    var rawValue: Double
+    init(weight: Int, height: Double) {
+        rawValue = Double(weight) / (height * height)
+    }
+}
+
+func bmi(_ weight: Int, _ height: Double) -> String {
+    let bmiIndex = BMIIndex(weight: weight, height: height)
+    let bmiKind = BMIKind(bmiIndex: bmiIndex.rawValue)
+    return bmiKind.description
+}
+```
+
+---
+
+### [String repeat](https://www.codewars.com/kata/57a0e5c372292dd76d000d7e)
+
+Write a function that accepts an integer `n` and a string `s` as parameters, and returns a string of s repeated exactly `n` times.
+
+Examples (input -> output)
+
+```bash
+6, "I"     -> "IIIIII"
+5, "Hello" -> "HelloHelloHelloHelloHello"
+```
+
+My solution:
+```swift
+func repeatStr(_ n: Int, _ string: String) -> String {
+    var repeatString = ""
+    if n > 0 {
+        for _ in 1...n {
+            repeatString += string
+        }
+    }
+    return repeatString
+}
+
+print(repeatStr(3, "Hello")) // HelloHelloHello
+```
+
+Other solutions:
+```swift
+
+func repeatStr(_ n: Int, _ string: String) -> String {
+  return String(repeating: string, count: n)
+}
+```
+
+---
+
 ### []()
+
+
 
 My solution:
 ```swift
@@ -985,6 +1129,8 @@ Other solutions:
 
 ### []()
 
+
+
 My solution:
 ```swift
 
@@ -1003,6 +1149,8 @@ Other solutions:
 
 ### []()
 
+
+
 My solution:
 ```swift
 
@@ -1017,3 +1165,162 @@ Other solutions:
 
 ```
 
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
