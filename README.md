@@ -65,6 +65,8 @@ func convertStringToInt(_ str: String) -> Int {
 
 Your goal is to return multiplication table for number that is always an integer from 1 to 10.
 
+Use [joined](https://developer.apple.com/documentation/swift/array/joined()) - Returns the elements of this sequence of sequences, concatenated.
+
 My solution:
 ```swift
 func multi_table(_ number: Int) -> String {
@@ -625,6 +627,8 @@ findDifference([3, 2, 5], [1, 4, 4]) // 14
 findDifference([9, 7, 2], [5, 2, 2]) // 106
 ```
 
+Use [reduce(_:_:)](https://developer.apple.com/documentation/swift/array/reduce(_:_:)) - Returns the result of combining the elements of the sequence using the given closure.
+
 Other solutions:
 ```swift
 func findDifference(_ a: [Int], _ b: [Int]) -> Int {
@@ -724,20 +728,239 @@ func switchItUp(_ number: Int) -> String {
 
 ---
 
-### []()
+### [Beginner - Lost Without a Map](https://www.codewars.com/kata/57f781872e3d8ca2a000007e)
+
+Given an array of integers, return a new array with each value doubled.
+
+For example:
+
+`[1, 2, 3] --> [2, 4, 6]`
 
 My solution:
 ```swift
-
+func maps(a : Array<Int>) -> Array<Int> {
+    var array: [Int] = []
+    for index in a {
+        let newNumber = index + index
+        array.append(newNumber)
+    }
+    return array
+}
 ```
 
 Other solutions:
 ```swift
-
+func maps(a : Array<Int>) -> Array<Int> {
+    return a.map { $0 * 2}
+}
 ```
 
 ```swift
+func maps(a : Array<Int>) -> Array<Int> {
+  var result: [Int] = []
+  for n in a {
+     result.append(n*2)
+  }
+  return result
+}
+```
 
+```swift
+func maps(a : Array<Int>) -> Array<Int> {
+  var b = a;
+  for i in 0 ..< a.count {
+    b[i] = a[i] * 2
+  }
+  return b;
+}
+```
+
+---
+
+### [Beginner - Reduce but Grow](https://www.codewars.com/kata/57f780909f7e8e3183000078)
+
+Given a non-empty array of integers, return the result of multiplying the values together in order. Example:
+
+`[1, 2, 3, 4] => 1 * 2 * 3 * 4 = 24`
+
+My solution:
+```swift
+func grow(_ arr: [Int]) -> Int {
+    var b = 1
+    arr.forEach { index in
+        b *= index
+    }
+    return b;
+}
+```
+
+Other solutions:
+```swift
+func grow(_ arr: [Int]) -> Int {
+  return arr.reduce(1,*)
+}
+```
+
+```swift
+func grow(_ arr: [Int]) -> Int {
+    var product = 1
+    for num in arr {
+        product *= num
+    }
+    return product
+}
+```
+
+---
+
+### [To square(root) or not to square(root)](https://www.codewars.com/kata/57f6ad55cca6e045d2000627)
+
+Write a method, that will get an integer array as parameter and will process every number from this array.
+
+Return a new array with processing every number of the input-array like this:
+
+If the number has an integer square root, take this, otherwise square the number.
+
+Example
+
+`[4,3,9,7,2,1] -> [2,9,3,49,4,1]`
+
+Notes
+The input array will always contain only positive numbers, and will never be empty or null.
+
+My solution:
+```swift
+import Foundation
+
+func squareOrSquareRoot(_ input: [Int]) -> [Int] {
+      return input.map {
+        let n = sqrt(Double($0))
+        return n == Double(Int(n)) ? Int(n) : $0 * $0
+    }
+}
+
+print(squareOrSquareRoot([4, 3, 9, 7, 2, 1])) // [2, 9, 3, 49, 4, 1]
+```
+
+Use [truncatingRemainder(dividingBy:)](https://developer.apple.com/documentation/swift/double/truncatingremainder(dividingby:)) - Returns the remainder of this value divided by the given value using truncating division.
+
+Other solutions:
+```swift
+import Foundation
+
+func squareOrSquareRoot(_ input: [Int]) -> [Int] {
+    return input.map { i in
+        let r = sqrt(Double(i))
+        return r.truncatingRemainder(dividingBy: 1).isZero ? Int(r) : i * i
+    }
+}
+```
+
+Use [floor()](https://www.educative.io/answers/what-is-the-floor-function-in-swift)
+
+```swift
+func squareOrSquareRoot(_ input: [Int]) -> [Int] {
+    var result = [Int]()
+    for item in input {
+        let square = Double(item).squareRoot()
+        if floor(square) == square {
+            result.append(Int(square))
+        } else {
+            result.append(item * item)
+        }
+    }
+    return result
+}
+```
+
+---
+
+### [Sum Mixed Array](https://www.codewars.com/kata/57eaeb9578748ff92a000009)
+
+Given an array of integers as strings and numbers, return the sum of the array values as if all were numbers.
+
+Return your answer as a number.
+
+My solution:
+```swift
+func sumMix(_ arr: [Any]) -> Int {
+  var sum = 0
+  for item in arr {
+    if let test = item as? String {
+      sum += Int(test)!
+    } else {
+        sum += item as! Int
+    }
+  }
+  return sum
+}
+
+print(sumMix([9, 3, "7", "3"])) // 22
+```
+
+Other solutions:
+```swift
+func sumMix(_ arr: [Any]) -> Int {
+    return arr.reduce(0) { $0 + (Int("\($1)") ?? 0) }
+}
+```
+
+[compactMap(_:)](https://developer.apple.com/documentation/swift/sequence/compactmap(_:)) - Returns an array containing the non-nil results of calling the given transformation with each element of this sequence.
+
+```swift
+func sumMix(_ arr: [Any]) -> Int {
+  return arr
+          .compactMap { Int("\($0)") }
+          .reduce(0,+)
+}
+```
+
+```swift
+func sumMix(_ arr: [Any]) -> Int {
+  return arr.map{ $0 as? Int ?? Int($0 as? String ?? "0")! }.reduce(0, +)
+}
+```
+
+---
+
+### [Fake Binary](https://www.codewars.com/kata/57eae65a4321032ce000002d)
+
+Given a string of digits, you should replace any digit below 5 with '0' and any digit 5 and above with '1'. Return the resulting string.
+
+Note: input will never be an empty string
+
+My solution:
+```swift
+func fakeBin(digits: String) -> String {
+  var newString: String = ""
+  for char in digits {
+    if let number = Int(String(char)) {
+      if(number < 5) {
+        newString += "0"
+      } else {
+        newString += "1"
+      }
+    }
+  }
+  return newString
+}
+fakeBin(digits: "45385593107843568") // 01011110001100111
+```
+
+Other solutions:
+```swift
+func fakeBin(digits: String) -> String {
+  return digits.map({$0 < "5" ? "0" : "1"}).joined()
+}
+```
+
+```swift
+func fakeBin(digits: String) -> String {
+    digits.reduce("") { $0 + ("01234".contains($1) ? "0" : "1") }
+    
+// or
+// digits.reduce("") { $0 + ($1 < "5" ? "0" : "1") }
+}
 ```
 
 ---
@@ -793,77 +1016,4 @@ Other solutions:
 ```swift
 
 ```
-
----
-
-### []()
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
-```swift
-
-```
-
----
-
-### []()
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
-```swift
-
-```
-
----
-
-### []()
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
-```swift
-
-```
-
----
-
-### []()
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
-```swift
-
-```
-
 
