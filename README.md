@@ -1307,7 +1307,7 @@ n =306-9 = 297 (not in the list)
 
 Use [compactMap(_:)](https://developer.apple.com/documentation/swift/sequence/compactmap(_:)) - Returns an array containing the non-nil results of calling the given transformation with each element of this sequence.
 
-[wholeNumberValue](https://developer.apple.com/documentation/swift/character/wholenumbervalue) - The numeric value this character represents, if it represents a whole number.
+[.wholeNumberValue](https://developer.apple.com/documentation/swift/character/wholenumbervalue) - The numeric value this character represents, if it represents a whole number.
 
 My solution:
 ```swift
@@ -1561,82 +1561,118 @@ func RentalCarCost(_ days: Int) -> Int {
 
 ---
 
-### []()
+### [Get the mean of an array](https://www.codewars.com/kata/563e320cee5dddcf77000158)
 
+Return the average of the given array rounded down to its nearest integer.
 
+The array will never be empty.
 
 My solution:
 ```swift
-
+func getAverage(_ marks: [Int]) -> Int { 
+  return marks.reduce(.zero, +) / marks.count
+  // or
+  // return marks.reduce(0) {($0 + $1)} / marks.count
+}
+getAverage([1,2,3,4,5,]) // 3
 ```
 
 Other solutions:
 ```swift
-
-```
-
-```swift
-
+func getAverage(_ marks: [Int]) -> Int {
+    var sum = 0
+    var count = 0
+    for i in marks {
+        sum += i
+        count += 1
+    }
+    var average = sum / count
+    return average //TODO : calculate the downwar rounded average of the marks array
+}
 ```
 
 ---
 
-### []()
+### [Grasshopper - Terminal game move function](https://www.codewars.com/kata/563a631f7cbbc236cf0000c2)
 
+Create a function for the terminal game that takes the current position of the hero and the roll (1-6) and return the new position.
 
+Example:
+`move(3, 6) should equal 15`
 
 My solution:
 ```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
-```swift
-
+func move(_ p: Int, _ r: Int) -> Int {
+    return p + (r * 2)
+}
 ```
 
 ---
 
-### []()
+### [Beginner Series #2 Clock](https://www.codewars.com/kata/55f9bca8ecaa9eac7100004a)
 
+Clock shows `h` hours, `m` minutes and `s` seconds after midnight.
 
+Your task is to write a function which returns the time since midnight in milliseconds.
+
+Example:
+
+```bash
+h = 0
+m = 1
+s = 1
+result = 61000
+```
+
+Input constraints:
+
+```bash
+0 <= h <= 23
+0 <= m <= 59
+0 <= s <= 59
+```
 
 My solution:
 ```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
-```swift
-
+func past(_ h: Int, _ m: Int, _ s: Int) -> Int {
+    return (h * 60 * 60 + m * 60 + s) * 1000
+}
+past(0, 1, 1) // 61000
+past(1, 1, 1) // 3661000
 ```
 
 ---
 
-### []()
+### [Grasshopper - Summation](https://www.codewars.com/kata/55d24f55d7dd296eb9000030)
 
+Write a program that finds the summation of every number from 1 to num. The number will always be a positive integer greater than 0.
 
+For example (Input -> Output):
+
+```bash
+2 -> 3 (1 + 2)
+8 -> 36 (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8)
+```
 
 My solution:
 ```swift
+func summation(_ n: Int) -> Int {
+    return n * ( n + 1 ) / 2
+    // or
+    // return (1...n).reduce(0){ $0 + $1 }
+}
 
+summation(1) // 1
+summation(8) // 36
+summation(22) // 253
 ```
 
-Other solutions:
 ```swift
-
-```
-
-```swift
-
+func summation(_ n: Int) -> Int {
+         var answer = 0
+         for number in 1...n { answer = answer + number }
+         return answer
+}
 ```
 
 ---
