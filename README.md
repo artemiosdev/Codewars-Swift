@@ -1107,122 +1107,456 @@ func repeatStr(_ n: Int, _ string: String) -> String {
 
 ---
 
-### []()
+### [Grasshopper - Personalized Message](https://www.codewars.com/kata/5772da22b89313a4d50012f7)
 
+Create a function that gives a personalized greeting. This function takes two parameters: name and owner.
 
+Use conditionals to return the proper message:
+
+case	return
+
+`name equals owner	-> 'Hello boss'`
+`otherwise	-> 'Hello guest'`
 
 My solution:
 ```swift
+func great(_ name: String, _ owner: String) -> String {
+    if name == owner {
+        return "Hello boss"
+    } else {
+        return "Hello guest"
+    }
+}
 
+print(great("Daniel", "Daniel")) // Hello boss
+print(great("Greg", "Daniel")) // Hello guest
 ```
 
 Other solutions:
 ```swift
-
+func great(_ name: String, _ owner: String) -> String {
+  return "Hello \(name == owner ? "boss" : "guest")"
+}
 ```
 
 ```swift
-
+func great(_ name: String, _ owner: String) -> String {
+  return name == owner ? "Hello boss" : "Hello guest"
+}
 ```
 
 ---
 
-### []()
+### [Sum of positive](https://www.codewars.com/kata/5715eaedb436cf5606000381)
 
+You get an array of numbers, return the sum of all of the positives ones.
 
+Example `[1,-4,7,12] => 1 + 7 + 12 = 20`
+
+Note: if there is nothing to sum, the sum is default to 0.
 
 My solution:
 ```swift
-
+func sumOfPositives (_ numbers: [Int] ) -> Int {
+    var result: Int = 0
+  for index in numbers {
+    if index > 0 {
+      result += index
+    } else {
+      continue
+    }
+  }
+    return result
+}
+sumOfPositives([1,2,3,4,5]) // 15
+sumOfPositives([1,-2,3,4,5]) // 13
 ```
 
 Other solutions:
 ```swift
-
+func sumOfPositives (_ numbers: [Int] ) -> Int {
+    var x = 0
+    numbers.forEach {
+        if $0 > 0 {
+            x += $0
+        }
+    }
+    return x
+}
 ```
 
 ```swift
+func sumOfPositives (_ numbers: [Int] ) -> Int {
+    return numbers.filter{ $0 > 0 }.reduce(0, +)
+}
+```
 
+```swift
+func sumOfPositives (_ numbers: [Int] ) -> Int {
+    return numbers.reduce (0) {$0 + max($1, 0)}
+}
 ```
 
 ---
 
-### []()
+### [Count the Monkeys!](https://www.codewars.com/kata/56f69d9f9400f508fb000ba7)
 
+Given the number `n`, populate an array with all numbers up to and including that number, but excluding zero.
 
+For example(Input --> Output):
+
+`10 --> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`
+
+` 1 --> [1]`
 
 My solution:
 ```swift
+func monkeyCount(_ n: Int) -> [Int] {
+    var results: [Int] = []
+    for i in 1...n {
+        results.append(i)
+    }
+    return results
+}
 
+monkeyCount(5) // [1, 2, 3, 4, 5]
 ```
 
 Other solutions:
 ```swift
-
+func monkeyCount(_ n: Int) -> [Int] {
+  guard n > 0 else {return []}
+    return Array(1...n)
+}
 ```
 
 ```swift
+func monkeyCount(_ n: Int) -> [Int] {
+    return n > 0 ? [Int](1...n) : []
+}
+```
 
+```swift
+func monkeyCount(_ n: Int) -> [Int] {
+  let monkeys = 1...n
+  return [Int](monkeys)
+}
 ```
 
 ---
 
-### []()
+### [Opposite number](https://www.codewars.com/kata/56dec885c54a926dcd001095)
 
+Very simple, given an integer or a floating-point number, find its opposite.
 
+Examples:
+
+```bash
+1: -1
+14: -14
+-34: 34
+```
+
+Use [abs(_:)](https://developer.apple.com/documentation/swift/abs(_:))
 
 My solution:
 ```swift
-
+func opposite(number: Double) -> Double {
+  var result: Double = 0.0
+  if number > 0 {
+    result = -number
+  } else {
+    result = abs(number)
+  }
+  return result
+}
 ```
 
 Other solutions:
 ```swift
-
-```
-
-```swift
-
+func opposite(number: Double) -> Double {
+  return -number
+}
 ```
 
 ---
 
-### []()
+### [Subtract the Sum](https://www.codewars.com/kata/56c5847f27be2c3db20009c3)
 
+Complete the function which get an input number `n` such that `n >= 10` and `n < 10000`, then:
 
+1. Sum all the digits of `n`.
+2. Subtract the sum from `n`, and it is your new `n`.
+3. If the new `n` is in the list below return the associated fruit, otherwise return back to task 1.
+
+Example
+```bash
+n = 325
+sum = 3+2+5 = 10
+n = 325-10 = 315 (not in the list)
+sum = 3+1+5 = 9
+n = 315-9 = 306 (not in the list)
+sum = 3+0+6 = 9
+n =306-9 = 297 (not in the list)
+.
+.
+.
+```
+
+...until you find the first n in the list below.
+
+Use [compactMap(_:)](https://developer.apple.com/documentation/swift/sequence/compactmap(_:)) - Returns an array containing the non-nil results of calling the given transformation with each element of this sequence.
+
+[wholeNumberValue](https://developer.apple.com/documentation/swift/character/wholenumbervalue) - The numeric value this character represents, if it represents a whole number.
 
 My solution:
 ```swift
-
+func subtractSum(_ n: Int) -> String {
+      let number = n - "\(n)".compactMap { Int(String($0)) }.reduce(0, +)
+    switch number {
+    case 9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99:
+        return "apple"
+    case 4, 6, 25, 29, 48, 50, 71, 73, 92, 94, 96:
+        return "banana"
+    case 20, 22, 41, 43, 62, 64, 66, 85, 87, 89:
+        return "cherry"
+    case 11, 13, 34, 55, 57, 59, 78, 80:
+        return "cucumber"
+    case 15, 17, 19, 38, 40, 61, 82, 84, 86:
+        return "grape"
+    case 1, 3, 24, 26, 47, 49, 68, 70, 91, 93:
+        return "kiwi"
+    case 5, 7, 28, 30, 32, 51, 53, 74, 76, 95, 97:
+        return "melon"
+    case 14, 16, 35, 37, 39, 58, 60, 83:
+        return "orange"
+    case 2, 21, 23, 42, 44, 46, 65, 67, 69, 88:
+        return "pear"
+    case 8, 10, 12, 31, 33, 52, 56, 75, 77, 79, 98, 100:
+        return "pineapple"
+    default:
+        return subtractSum(number)
+    }
+}
 ```
+
 
 Other solutions:
 ```swift
-
+func subtractSum1(_ n: Int) -> String {
+    let strN = String(n)
+    let sum = strN.compactMap{$0.wholeNumberValue}.reduce(0, +)
+    var subSum = n - sum
+    
+    while subSum >= 100 {
+        var strN2 = String(subSum)
+        var sum2 = strN2.compactMap{$0.wholeNumberValue}.reduce(0, +)
+        
+        subSum -= sum2
+        
+    }
+    
+    switch subSum {
+    case 1,3,24,26,47,49,68,70,91,93: return "kiwi"
+    case 2,21,23,42,44,46,65,67,69,88: return "pear"
+    case 4,6,25,29,48,50,71,73,92,94,96: return "banana"
+    case 5,7,28,30,32,51,53,74,76,95,97: return "melon"
+    case 8,10,12,31,33,52,56,75,77,79,98,100: return "pineapple"
+    case 9,18,27,36,45,54,63,72,81,90,99: return "apple"
+    case 11,13,34,55,57,59,78,80: return "cucumber"
+    case 14,16,35,37,39,58,60,83: return "orange"
+    case 15,17,19,38,40,61,82,84,86: return "grape"
+    case 20,22,41,43,62,64,66,85,87,89: return "cheryy"
+    default: return ""
+    }
+}
 ```
 
 ```swift
+func subtractSum(_ n: Int) -> String {
+    let id: Int = n - "\(n)".compactMap { Int("\($0)") }.reduce(0, { $0 + $1 })
+    return fruits[id] != nil ? fruits[id]! : subtractSum(id)
+}
 
+let fruits: [Int:String] = [
+    1: "kiwi",
+    2: "pear",
+    3: "kiwi",
+    4: "banana",
+    5: "melon",
+    6: "banana",
+    7: "melon",
+    8: "pineapple",
+    9: "apple",
+    10: "pineapple",
+    11: "cucumber",
+    12: "pineapple",
+    13: "cucumber",
+    14: "orange",
+    15: "grape",
+    16: "orange",
+    17: "grape",
+    18: "apple",
+    19: "grape",
+    20: "cherry",
+    21: "pear",
+    22: "cherry",
+    23: "pear",
+    24: "kiwi",
+    25: "banana",
+    26: "kiwi",
+    27: "apple",
+    28: "melon",
+    29: "banana",
+    30: "melon",
+    31: "pineapple",
+    32: "melon",
+    33: "pineapple",
+    34: "cucumber",
+    35: "orange",
+    36: "apple",
+    37: "orange",
+    38: "grape",
+    39: "orange",
+    40: "grape",
+    41: "cherry",
+    42: "pear",
+    43: "cherry",
+    44: "pear",
+    45: "apple",
+    46: "pear",
+    47: "kiwi",
+    48: "banana",
+    49: "kiwi",
+    50: "banana",
+    51: "melon",
+    52: "pineapple",
+    53: "melon",
+    54: "apple",
+    55: "cucumber",
+    56: "pineapple",
+    57: "cucumber",
+    58: "orange",
+    59: "cucumber",
+    60: "orange",
+    61: "grape",
+    62: "cherry",
+    63: "apple",
+    64: "cherry",
+    65: "pear",
+    66: "cherry",
+    67: "pear",
+    68: "kiwi",
+    69: "pear",
+    70: "kiwi",
+    71: "banana",
+    72: "apple",
+    73: "banana",
+    74: "melon",
+    75: "pineapple",
+    76: "melon",
+    77: "pineapple",
+    78: "cucumber",
+    79: "pineapple",
+    80: "cucumber",
+    81: "apple",
+    82: "grape",
+    83: "orange",
+    84: "grape",
+    85: "cherry",
+    86: "grape",
+    87: "cherry",
+    88: "pear",
+    89: "cherry",
+    90: "apple",
+    91: "kiwi",
+    92: "banana",
+    93: "kiwi",
+    94: "banana",
+    95: "melon",
+    96: "banana",
+    97: "melon",
+    98: "pineapple",
+    99: "apple",
+    100: "pineapple"
+]
+```
+
+```swift
+func subtractSum(_ n: Int) -> String {
+    var count = n
+    var sum = 0
+    var newN = n
+    var str = ""
+    while newN > 0 {
+        sum = String(count).compactMap( { $0.wholeNumberValue }).reduce(0, +)
+        newN = newN - sum
+        count = newN
+        if newN > 0 && newN <= 100 {
+            switch newN {
+            case 1, 3, 24, 26, 47, 49, 68, 70, 91, 93: str = "kiwi"
+            case 2, 21, 23, 42, 44, 46, 65, 67, 69, 88: str = "pear"
+            case 4, 6, 25, 29, 48, 50, 71, 73, 92, 94, 96: str = "banana"
+            case 5, 7, 28, 30, 32, 51, 53, 74, 76, 95, 97: str = "melon"
+            case 8, 10, 12, 31, 33, 52, 56, 75, 77, 79, 98, 100: str = "pineapple"
+            case 9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99: str = "apple"
+            case 11, 13, 34, 55, 57, 59, 78, 80: str = "cucumber"
+            case 14, 16, 35, 37, 39, 58, 60, 83: str = "orange"
+            case 15, 17, 19, 38, 40, 61, 82, 84, 86: str = "grape"
+            case 20, 22, 41, 43, 62, 64, 66, 85, 87, 89: str = "cherry"
+            default: str = ""
+            }
+        }
+    }
+    return str
+}
 ```
 
 ---
 
-### []()
+### [Transportation on vacation](https://www.codewars.com/kata/568d0dd208ee69389d000016)
 
+Every day you rent the car costs $40. If you rent the car for 7 or more days, you get $50 off your total. Alternatively, if you rent the car for 3 or more days, you get $20 off your total.
 
+Write a code that gives out the total amount for different days(d).
 
 My solution:
 ```swift
+func RentalCarCost(_ days: Int) -> Int {
+    var result: Int = 0
+    if days < 3 {
+        result = days * 40
+   }
+    if days >= 3 && days < 7 {
+         result = days * 40 - 20
+    }
+    if days >= 7 {
+        result = days * 40 - 50
+    }
+    return result
+}
 
+RentalCarCost(1) // 40
+RentalCarCost(2) // 80
+RentalCarCost(3) // 100
+RentalCarCost(4) // 140
+RentalCarCost(5) // 180
+RentalCarCost(7) // 230
 ```
 
 Other solutions:
 ```swift
-
-```
-
-```swift
-
+func RentalCarCost(_ days: Int) -> Int {
+        let rentCostPerDay = 40
+        var total = days * rentCostPerDay
+        
+        if days >= 7 {
+            total -= 50
+        } else if days >= 3 {
+            total -= 20
+        }
+        return total
+}
 ```
 
 ---
