@@ -1684,10 +1684,10 @@ Complete the function so that it finds the average of the three scores passed to
 ```bash
 Numerical Score	Letter Grade
 90 <= score <= 100  ->	'A'
-80 <= score < 90    ->  'B'
-70 <= score < 80	->  'C'
-60 <= score < 70	->  'D'
-0 <= score < 60	    ->  'F'
+80 <= score < 90  ->	'B'
+70 <= score < 80  ->	'C'
+60 <= score < 70  ->	'D'
+0 <= score < 60  ->	'F'
 ```
 
 Tested values are all between 0 and 100. Theres is no need to check for negative values or values greater than 100.
@@ -1867,32 +1867,232 @@ Other solutions:
 func digitize(_ num:Int) -> [Int] {
   return "\(num)".map{$0.wholeNumberValue!}.reversed()
   
-// or
-//    return String(num).compactMap { Int(String($0)) }.reversed()
+//  or
+//  return String(num).compactMap { Int(String($0)) }.reversed()
 
-//    return String(num).compactMap {$0.wholeNumberValue}.reversed()
+//  return String(num).compactMap {$0.wholeNumberValue}.reversed()
 }
 ```
 
 ---
 
-### []()
+### [Is n divisible by x and y?](https://www.codewars.com/kata/5545f109004975ea66000086)
 
+Create a function that checks if a number `n` is divisible by two numbers `x AND y`. All inputs are positive, non-zero numbers.
 
+Examples:
+```bash
+1) n =   3, x = 1, y = 3 =>  true because   3 is divisible by 1 and 3
+2) n =  12, x = 2, y = 6 =>  true because  12 is divisible by 2 and 6
+3) n = 100, x = 5, y = 3 => false because 100 is not divisible by 3
+4) n =  12, x = 7, y = 5 => false because  12 is neither divisible by 7 nor 5
+```
 
 My solution:
 ```swift
+func isDivisible(_ n: Int, _ x: Int, _ y: Int) -> Bool {
+    if n % x == 0 && n % y == 0 {
+        return true
+    }
+    return false
+}
 
+print(isDivisible(100, 5, 10)) // true
+print(isDivisible(100, 5, 3)) // false
 ```
 
 Other solutions:
 ```swift
+func isDivisible(_ n: Int, _ x: Int, _ y: Int) -> Bool {
+    return n.isMultiple(of: x) && n.isMultiple(of: y)
+}
+```
 
+---
+
+### [Convert a Boolean to a String](https://www.codewars.com/kata/551b4501ac0447318f0009cd)
+
+My solution:
+```swift
+func booleanToString(_ b: Bool) -> String {
+  return "\(b)"
+  
+  // or
+  // return String(b)
+}
+```
+
+Other solutions:
+```swift
+let booleanToString: (Bool) -> String = { "\($0)" }
+```
+
+---
+
+### [Enumerable Magic #25 - Take the First N Elements](https://www.codewars.com/kata/545afd0761aa4c3055001386)
+
+Create a function take that takes an Array Int and an Int, n, and returns an Array Int containing the first up to n elements from the array.
+
+My solution:
+```swift
+func take(_ arr: [Int], _ n: Int) -> [Int] {
+    var result: [Int] = []
+    var count = 0
+    for index in arr {
+        if count < n {
+            count += 1
+            result.append(index)
+        }
+    }
+    return result
+}
+
+take([0, 1, 2, 3, 5, 8, 13], 3) // [0, 1, 2]
+take([0, 1, 2, 3, 5, 8, 13], 0) // []
+```
+
+Other solutions:
+```swift
+func take(_ arr: [Int], _ n: Int) -> [Int] {
+    return Array(arr.prefix(n))
+}
 ```
 
 ```swift
-
+func take(_ arr: [Int], _ n: Int) -> [Int] {
+  return arr.count > n ? Array(arr[0..<n]) : arr
+}
 ```
+
+---
+
+### [Even or Odd](https://www.codewars.com/kata/53da3dbb4a5168369a0000fe)
+
+Create a function that takes an integer as an argument and returns "Even" for even numbers or "Odd" for odd numbers.
+
+My solution:
+```swift
+func evenOrOdd(_ number:Int) -> String {
+  if number % 2 == 0 {
+    return "Even"
+  }
+  return "Odd"
+}
+```
+
+Other solutions:
+```swift
+func evenOrOdd(_ number:Int) -> String {
+  return number % 2 == 0 ? "Even" : "Odd"
+}
+```
+
+```swift
+func evenOrOdd(_ n: Int) -> String {
+    return n.isMultiple(of: 2) ? "Even" : "Odd"
+}
+```
+
+---
+
+### [Convert boolean values to strings 'Yes' or 'No'.](https://www.codewars.com/kata/53369039d7ab3ac506000467)
+
+```swift
+func boolToWord(_ bool: Bool) -> String {
+  return bool ? "Yes" : "No"
+}
+```
+
+---
+
+### [Convert a Number to a String!](https://www.codewars.com/kata/5265326f5fda8eb1160004c8)
+
+```swift
+func numberToString(number: Int) -> String { 
+  return "\(number)"
+  // or
+  // return number.description
+  // return String(number)
+}
+```
+
+---
+
+### [Kata Example Twist](https://www.codewars.com/kata/525c1a07bb6dda6944000031)
+
+Add the value "codewars" to the array websites/Websites 1,000 times.
+
+```swift
+var websites = Array(repeating: "codewars", count: 1000)
+```
+
+---
+
+### [Function 1 - hello world](https://www.codewars.com/kata/523b4ff7adca849afe000035)
+
+```swift
+func greet() -> String {
+  return "hello world!"
+}
+```
+
+---
+
+### [Reversed Strings](https://www.codewars.com/kata/5168bb5dfe9a00b126000018)
+
+Complete the solution so that it reverses the string passed into it.
+
+```bash
+'world'  =>  'dlrow'
+'word'   =>  'drow'
+```
+
+My solution:
+```swift
+func reverse(_ str: String) -> String {
+    let reversedWord = String(str.reversed())
+    return reversedWord
+}
+
+reverse("hello") // "olleh"
+reverse("rat") // "tar"
+```
+
+---
+
+### [Square(n) Sum](https://www.codewars.com/kata/515e271a311df0350d00000f)
+
+Complete the square sum function so that it squares each number passed into it and then sums the results together.
+
+My solution:
+```swift
+func squareSum(_ vals: [Int]) -> Int {
+    var result: Int = 0
+    for index in vals {
+        let mult = index * index
+        result += mult
+    }
+    return result
+}
+
+squareSum([1, 2]) //  5
+squareSum([3, 4]) // 25
+```
+
+Other solutions:
+```swift
+func squareSum(_ vals: [Int]) -> Int {
+  return vals.reduce(0) { $0 + $1 * $1 }
+}
+```
+
+```swift
+func squareSum(_ vals:[Int]) -> Int {
+  return vals.map{ $0 * $0 }.reduce(0, +)
+}
+```
+
+7kue
 
 ---
 
@@ -1910,9 +2110,6 @@ Other solutions:
 
 ```
 
-```swift
-
-```
 
 ---
 
@@ -1930,9 +2127,6 @@ Other solutions:
 
 ```
 
-```swift
-
-```
 
 ---
 
@@ -1950,8 +2144,160 @@ Other solutions:
 
 ```
 
+
+---
+
+### []()
+
+
+
+My solution:
 ```swift
 
 ```
 
+Other solutions:
+```swift
+
+```
+
+
 ---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+
+
+
+
