@@ -1677,6 +1677,205 @@ func summation(_ n: Int) -> Int {
 
 ---
 
+### [Grasshopper - Grade book](https://www.codewars.com/kata/55cbd4ba903825f7970000f5)
+
+Complete the function so that it finds the average of the three scores passed to it and returns the letter value associated with that grade.
+
+```bash
+Numerical Score	Letter Grade
+90 <= score <= 100  ->	'A'
+80 <= score < 90    ->  'B'
+70 <= score < 80	->  'C'
+60 <= score < 70	->  'D'
+0 <= score < 60	    ->  'F'
+```
+
+Tested values are all between 0 and 100. Theres is no need to check for negative values or values greater than 100.
+
+My solution:
+```swift
+func getGrade(_ s1: Int, _ s2: Int, _ s3: Int) -> String {
+    let score = (s1 + s2 + s3) / 3
+    var result: String = ""
+    if score >= 90 && score <= 100 {
+        result = "A"
+    }
+    if score >= 80 && score < 90 {
+        result = "B"
+    }
+    if score >= 70 && score < 80 {
+        result = "C"
+    }
+    if score >= 60 && score < 70 {
+        result = "D"
+    }
+    if score < 60 {
+        result = "F"
+    }
+    return result
+}
+
+getGrade(95,90,93) // A
+getGrade(82,85,87) // B
+getGrade(75,70,79) // C
+getGrade(65,70,59) // D
+getGrade(58,59,60) // F
+```
+
+Other solutions:
+```swift
+func getGrade(_ s1: Int, _ s2: Int, _ s3: Int) -> String {
+  var sum = (s1 + s2 + s3) / 3
+  switch sum {
+    case 90...100:
+      return "A"
+    case 80..<90:
+      return "B"
+    case 70..<80:
+      return "C"
+    case 60..<70:
+      return "D"
+    default:
+      return "F"
+  }
+}
+```
+
+---
+
+### [Grasshopper - Check for factor](https://www.codewars.com/kata/55cbc3586671f6aa070000fb)
+
+This function should test if the factor is a factor of base.
+
+Return `true` if it is a factor or `false` if it is not.
+
+Factors are numbers you can multiply together to get another number.
+
+2 and 3 are factors of 6 because: `2 * 3 = 6`
+
+You can find a factor by dividing numbers. If the remainder is 0 then the number is a factor.
+You can use the mod operator (%) in most languages to check for a remainder
+For example 2 is not a factor of 7 because: `7 % 2 = 1`
+
+Note: base is a non-negative number, factor is a positive number.
+
+Проверка с оператором целочисленного деления (a % b) показывает, какое количество b помещается внутри a, и возвращает остаток деления a на b. 
+
+Чтобы получить результат деления a % b, оператор % вычисляет следующее выражение и возвращает остаток:
+
+`a = (b × множитель) + остаток`
+
+где множитель показывает, сколько раз целых `b` содержится в `a`.
+
+Подставляя в это выражение 9 и 4, получим:
+
+`9 = (4 × 2) + 1`
+
+My solution:
+```swift
+func checkForFactor(_ base: Int, _ factor: Int) -> Bool {
+    return base % factor == 0
+    // or
+    // return base.isMultiple(of: factor)
+}
+
+checkForFactor(10, 2)    // true
+checkForFactor(24612, 3) // true
+checkForFactor(9, 2)     // false
+checkForFactor(653, 7)   // false
+```
+
+```swift
+let checkForFactor: (_ base: Int, _ factor: Int) -> Bool = { $0 % $1 == 0 }
+```
+
+---
+
+### [Grasshopper - Messi Goals](https://www.codewars.com/kata/55ca77fa094a2af31f00002a)
+
+My solution:
+```swift
+var laLigaGoals = 43
+var championLeagueGoals = 10
+var copaDelReyGoals = 5
+
+var totalGoals = laLigaGoals + championLeagueGoals + copaDelReyGoals
+```
+
+---
+
+### [Returning Strings](https://www.codewars.com/kata/55a70521798b14d4750000a4)
+
+My solution:
+```swift
+func greet(_ name: String) -> String {
+  return "Hello, \(name) how are you doing today?"
+}
+```
+
+---
+
+### [Dollars and Cents](https://www.codewars.com/kata/55902c5eaa8069a5b4000083)
+
+`3.1 needs to become $3.10`
+
+My solution:
+```swift
+func formatMoney(_ val:Double) -> String {
+    return String(format: "$%.02f", val)
+}
+
+formatMoney(0) // $0.00
+formatMoney(3) // $3.00
+formatMoney(5.1000000) // $5.10
+formatMoney(123456789.166666) // $123456789.17
+```
+
+---
+
+### [Convert number to reversed array of digits](https://www.codewars.com/kata/5583090cbe83f4fd8c000051)
+
+Given a random non-negative number, you have to return the digits of this number within an array in reverse order.
+
+Example (Input => Output):
+
+`35231 => [1,3,2,5,3]`
+
+`0 => [0]`
+
+My solution:
+```swift
+func digitize(_ num: Int) -> [Int] {
+    guard num > 0 else {
+        return [0]
+    }
+    var result: [Int] = []
+    var i = num
+    while i != 0 {
+    // добавляет в конец пустого массива
+        result.append(i % 10)
+        i = i / 10
+    }
+    return result
+}
+
+digitize(348597) // [7,9,5,8,4,3]
+```
+
+Other solutions:
+```swift
+func digitize(_ num:Int) -> [Int] {
+  return "\(num)".map{$0.wholeNumberValue!}.reversed()
+  
+// or
+//    return String(num).compactMap { Int(String($0)) }.reversed()
+
+//    return String(num).compactMap {$0.wholeNumberValue}.reversed()
+}
+```
+
+---
+
 ### []()
 
 
@@ -1694,3 +1893,65 @@ Other solutions:
 ```swift
 
 ```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+```swift
+
+```
+
+---
