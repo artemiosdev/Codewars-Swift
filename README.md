@@ -2092,41 +2092,172 @@ func squareSum(_ vals:[Int]) -> Int {
 }
 ```
 
-7kue
+## 7kue
 
 ---
 
-### []()
+### [Valid Parentheses](https://www.codewars.com/kata/6411b91a5e71b915d237332d)
 
+Write a function that takes a string of parentheses, and determines if the order of the parentheses is valid. The function should return true if the string is valid, and false if it's invalid.
 
+Examples
+
+```bash
+"()"              =>  true
+")(()))"          =>  false
+"("               =>  false
+"(())((()())())"  =>  true
+```
+
+Constraints
+
+`0 <= length of input <= 100`
+
+All inputs will be strings, consisting only of characters ( and ).
+Empty strings are considered balanced (and therefore valid), and will be tested.
 
 My solution:
 ```swift
+func validParentheses(_ str: String) -> Bool {
+    var answer = 0
+    for i in str {
+        answer = i == "(" ? answer + 1 : answer - 1
+        if answer < 0 {
+            return false
+        }
+    }
+    return answer == 0
+}
 
+validParentheses("()") // true
+validParentheses("((()))") // true
+validParentheses(")()()(") // false
+validParentheses("((((") // false
+validParentheses("))))") // false
+validParentheses("()()()") // true
+```
+
+Other solutions:
+
+```swift
+func validParentheses(_ str: String) -> Bool {
+ var counter = 0
+    
+    for element in str {
+        if element == "(" {
+            counter += 1
+        } else if element == ")" {
+            counter -= 1
+        }
+        if counter < 0 {
+            return false
+        }
+    }
+    return counter == 0
+}
+```
+
+```swift
+func validParentheses(_ str: String) -> Bool {
+    var openParentheses: [Character] = []
+    for character in str {
+        if character == "("{
+            openParentheses.append(character)
+        } else if character == ")" {
+            guard openParentheses.last == "(" else { return false }
+            openParentheses.removeLast()
+        }
+    }
+    return openParentheses.isEmpty
+}
+```
+
+Нет необходимости вставлять закрывающие скобки в стек. В нашем стеке будут храниться только открывающие скобки.
+Используйте словарь для хранения закрывающих скобок в качестве ключей и открывающих скобок в качестве значений. Мы будем использовать это для сопоставления скобок.
+
+Если стек пуст и если символ является открывающей скобкой, добавьте его в стек.
+Если символ является закрывающей скобкой и он совпадает с открывающей скобкой в верхней части стека, удалите скобку из верхней части стека.
+
+Если символ является закрывающей скобкой, и он не совпадает с открывающей скобкой в верхней части стека, верните значение false. Логика: Соответствующая открывающая скобка не существует, и поэтому она недопустима.
+
+В противном случае добавьте открывающую скобку к стеку.
+В конце мы возвращаем true, если в стеке не осталось открывающих скобок.
+
+```swift
+// variable solution with different brackets
+func validParentheses(_ str: String) -> Bool {
+    var stack: [Character] = []
+    let bracketMatch: [Character: Character] = [")": "(", "}": "{", "]": "["]
+    for char in str {
+        if let last = stack.last, last == bracketMatch[char] {
+            stack.removeLast()
+        } else {
+            switch char {
+            case ")", "}", "]":
+                return false
+            default:
+                stack.append(char)
+            }
+        }
+    }
+    return stack.count == 0
+}
+```
+
+---
+
+### [The 'spiraling' box](https://www.codewars.com/kata/63b84f54693cb10065687ae5)
+
+Given two positive integers m (width) and n (height), fill a two-dimensional list (or array) of size m-by-n in the following way:
+
+- All the elements in the first and last row and column are 1.
+- All the elements in the second and second-last row and column are 2, excluding the elements from step 1.
+- All the elements in the third and third-last row and column are 3, excluding the elements from the previous steps.
+
+Given `m = 10`, `n = 9`, your function should return
+
+```bash
+[[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+ [1, 2, 2, 2, 2, 2, 2, 2, 2, 1],
+ [1, 2, 3, 3, 3, 3, 3, 3, 2, 1], 
+ [1, 2, 3, 4, 4, 4, 4, 3, 2, 1], 
+ [1, 2, 3, 4, 5, 5, 4, 3, 2, 1], 
+ [1, 2, 3, 4, 4, 4, 4, 3, 2, 1], 
+ [1, 2, 3, 3, 3, 3, 3, 3, 2, 1], 
+ [1, 2, 2, 2, 2, 2, 2, 2, 2, 1], 
+ [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+```
+
+My solution:
+```swift
+func createBox(_ m: Int, _ n: Int) -> [[Int]] {
+    var matrix = Array(repeating: Array(repeating: 0, count: m), count: n)
+    for i in 0..<n {
+        for j in 0..<m {
+            let minIndex = min(i,j,n-i-1,m-j-1)
+            matrix[i][j] = minIndex+1
+        }
+    }
+    return matrix
+}
+
+print(createBox(5, 8))
+// [[1, 1, 1, 1, 1], 
+// [1, 2, 2, 2, 1], 
+// [1, 2, 3, 2, 1], 
+// [1, 2, 3, 2, 1], 
+// [1, 2, 3, 2, 1], 
+// [1, 2, 3, 2, 1], 
+// [1, 2, 2, 2, 1], 
+// [1, 1, 1, 1, 1]]
 ```
 
 Other solutions:
 ```swift
-
+func createBox(_ m: Int, _ n: Int) -> [[Int]] {
+  (0..<n).map { i in (0..<m).map { j in min(i, j, n - i - 1, m - j - 1) + 1 } }
+}
 ```
-
-
----
-
-### []()
-
-
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
 
 ---
 
