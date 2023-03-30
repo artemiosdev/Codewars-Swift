@@ -2261,69 +2261,185 @@ func createBox(_ m: Int, _ n: Int) -> [[Int]] {
 
 ---
 
-### []()
+### [Functional Addition](https://www.codewars.com/kata/538835ae443aae6e03000547)
 
+Create a function `add(n) / Add(n)` which returns a function that always adds n to any number
 
+```bash
+addOne = add(1)
+addOne(3) // 4
+```
 
 My solution:
 ```swift
+func add(_ n: Int) -> ((Int) -> Int) { 
+  func Add(_ y: Int) -> Int {
+    return n + y
+  }
+  return Add
+}
 
+add(1)(3) // 4, "add(1)(3) does not equal 4")
+add(2)(2) // 4, "add(2)(2) does not equal 4")
 ```
 
 Other solutions:
 ```swift
-
+func add(_ n: Int) -> ((Int) -> Int) { 
+	return { return $0 + n }
+}
 ```
 
 
 ---
 
-### []()
+### [Disemvowel Trolls](https://www.codewars.com/kata/52fba66badcd10859f00097e)
 
+Your task is to write a function that takes a string and return a new string with all vowels removed.
 
+For example, the string `This website is for losers LOL!` would become `Ths wbst s fr lsrs LL!`.
+
+Note: for this kata `y` isn't considered a vowel.
 
 My solution:
 ```swift
+func disemvowel(_ s: String) -> String {
+    var result = ""
+    for index in s {
+        switch index {
+        case "a":
+            continue
+        case "A":
+            continue
+        case "e":
+            continue
+        case "E":
+            continue
+        case "i":
+            continue
+        case "I":
+            continue
+        case "o" :
+            continue
+        case "O":
+            continue
+        case "u":
+            continue
+        case "U":
+            continue
+        default:
+            result.append(index)
+        }
+    }
+    return result
+}
+disemvowel("This website is for losers LOL!") // Ths wbst s fr lsrs LL!
+```
 
+[replacingOccurrences(of:with:)](https://developer.apple.com/documentation/foundation/nsstring/1412937-replacingoccurrences) - Returns a new string in which all occurrences of a target string in the receiver are replaced by another given string.
+
+In "of" he's specifying the chars he wants to replace, replacing them with "" (empty string, so, nothing) and than he's specifing in the options that the chars to remove have to be read as a regularExpression and that they are NOT case sensitive, so even uppercased vowels char will be removed.
+
+Other solutions:
+```swift
+func disemvowel(_ s: String) -> String {
+  return s.replacingOccurrences(of: "[aeiou]", with: "", options: [.regularExpression, .caseInsensitive])
+}
+```
+
+```swift
+let vowels = Set("aeiouAEIOU")
+
+func disemvowel(_ s: String) -> String {
+    return s.filter { !vowels.contains($0) }
+}
+
+// or
+func disemvowel(_ s: String) -> String {
+  let vowels: [Character] = ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"]
+  
+  return String(s.characters.filter { !vowels.contains($0) })
+}
+```
+
+---
+
+### [Jaden Casing Strings](https://www.codewars.com/kata/5390bac347d09b7da40006f6)
+
+Преобразовать строку, где каждое слово с заглавной буквы
+
+My solution:
+```swift
+import Foundation
+
+extension String {
+    func toJadenCase() -> String {
+      var toJadenCase: String {self.capitalized}
+      return toJadenCase
+    }
+}
+// "How can mirrors be real if our eyes aren't real",
+// "How Can Mirrors Be Real If Our Eyes Aren't Real"
 ```
 
 Other solutions:
 ```swift
+import Foundation
 
+extension String {
+    func toJadenCase() -> String {
+      let arr = self.components(separatedBy: " ")
+      let cArr = arr.map { $0.prefix(1).uppercased() + $0.lowercased().dropFirst() }
+      return cArr.joined(separator: " ")
+    }
+}
 ```
 
 
 ---
 
-### []()
+### [Credit Card Mask](https://www.codewars.com/kata/5412509bd436bd33920011bc)
 
+Your task is to write a function maskify, which changes all but the last four characters into `#`.
 
+Examples
+
+```bash
+maskify("4556364607935616") // should return "############5616"
+maskify("64607935616")      // should return "#######5616"
+maskify("1")                // should return "1"
+maskify("")                 // should return ""
+
+// "What was the name of your first pet?"
+maskify("Skippy")                                   // should return "##ippy"
+maskify("Nananananananananananananananana Batman!") // should return "####################################man!"
+```
+
+[init(repeating:count:)](https://developer.apple.com/documentation/swift/string/2427723-init) - Creates a new string representing the given string repeated the specified number of times.
+
+[suffix(_:)](https://developer.apple.com/documentation/swift/array/suffix(_:)) - Returns a subsequence, up to the given maximum length, containing the final elements of the collection
 
 My solution:
 ```swift
-
+func maskify(_ string: String) -> String {
+    guard string.count > 4 else { return string }
+    return .init(repeating: "#", count: string.count-4) + string.suffix(4)
+}
 ```
+
+[repeatElement(_:count:)](https://developer.apple.com/documentation/swift/1641513-repeatelement) - Creates a collection containing the specified number of the given element.
 
 Other solutions:
 ```swift
-
-```
-
-
----
-
-### []()
-
-
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
+func maskify(_ string: String) -> String {
+    guard string.count > 4 else { return string }
+    var str = "", i = 0
+    while i < string.count - 4 {
+        str += repeatElement("#", count: i).repeatedValue
+        i = i + 1
+    }
+    return str + string.suffix(4)
+}
 ```
 
 
