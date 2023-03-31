@@ -2646,37 +2646,67 @@ func countArare(_ n: Int) -> String {
 
 ---
 
-### []()
+### [Don't give me five!](https://www.codewars.com/kata/5813d19765d81c592200001a)
 
+Вы получаете начало и числовой конец, и должны вернуть количество всех чисел в этом диапозоне включительно, кроме числа 5.
 
+`1,9 -> 1,2,3,4,6,7,8,9 -> Result 8`
+
+`4,17 -> 4,6,7,8,9,10,11,12,13,14,16,17 -> Result 12`
 
 My solution:
 ```swift
-
+func dontGiveMeFive(_ start: Int, _ end: Int) -> Int {
+    var count = 0;
+    for i in start...end {
+        if String(i).contains("5") {
+            continue
+        }
+        else {
+            count = count + 1
+        }
+    }
+    return count
+}
+dontGiveMeFive(1,9) // 8
+dontGiveMeFive(4,17) // 12
 ```
 
 Other solutions:
 ```swift
-
+func dontGiveMeFive(_ start: Int, _ end: Int) -> Int {
+    return (start...end).filter { !String($0).contains("5") }.count
+}
 ```
 
+```swift
+let dontGiveMeFive: (Int, Int) -> Int = {
+    ($0...$1).filter { !"\($0)".contains("5") }.count
+}
+```
 
 ---
 
-### []()
+### [Drying Potatoes](https://www.codewars.com/kata/58ce8725c835848ad6000007)
 
+Write function potatoes (содержание воды в картофеле) with
 
+- int parameter `p0` - initial percent of water-
+- int parameter `w0` - initial weight -
+- int parameter `p1` - final percent of water -
+potatoesshould return the final weight coming out of the oven w1 truncated as an int.
+
+Example: 
+`potatoes(99, 100, 98) --> 50`
 
 My solution:
 ```swift
-
+func potatoes (_ p0: Int, _ w0: Int, _ p1: Int) -> Int {
+    return w0 * (100 - p0) / (100 - p1)
+}
+dotest(99, 100, 98) // 50
+dotest(82, 127, 80) // 114
 ```
-
-Other solutions:
-```swift
-
-```
-
 
 ---
 
