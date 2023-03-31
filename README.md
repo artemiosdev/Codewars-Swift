@@ -6,9 +6,9 @@
 
 <div>
 <a href="https://codewars.com/users/artemiosdev"><img src="https://www.codewars.com/users/artemiosdev/badges/large" align="left"></img></a>
+<br>
 </div>
 <br>
-<hr>
 <br>
 
 ### 8 kyu
@@ -2420,6 +2420,19 @@ maskify("Nananananananananananananananana Batman!") // should return "##########
 [suffix(_:)](https://developer.apple.com/documentation/swift/array/suffix(_:)) - Returns a subsequence, up to the given maximum length, containing the final elements of the collection
 
 My solution:
+
+```swift
+func maskify(_ string:String) -> String {
+  if string.count < 5 {
+    return string
+  }  else {
+    return String(repeating: "#", count: string.count - 4) + String(string.suffix(4))
+  }
+}
+
+maskify("4556364607935616") // ############5616
+```
+
 ```swift
 func maskify(_ string: String) -> String {
     guard string.count > 4 else { return string }
@@ -2442,57 +2455,194 @@ func maskify(_ string: String) -> String {
 }
 ```
 
+[enumerated()](https://developer.apple.com/documentation/swift/array/enumerated()) - Returns a sequence of pairs (n, x), where n represents a consecutive integer starting at zero and x represents an element of the sequence.
 
----
-
-### []()
-
-
-
-My solution:
 ```swift
+import Foundation
 
-```
-
-Other solutions:
-```swift
-
+func maskify(_ string:String) -> String {
+  string.enumerated().map { $0 < string.count - 4 ? "#" : "\($1)"}.joined()
+}
 ```
 
 
 ---
 
-### []()
+### [Triangular Treasure](https://www.codewars.com/kata/525e5a1cb735154b320002c8)
 
+You need to return the nth triangular number. You should return 0 for out of range values:
 
+Треугольные числа называются так из-за равносторонней треугольной формы, которую они занимают, когда расположены точками.
+
+For example: (Input --> Output)
+
+```
+0 --> 0
+2 --> 3
+3 --> 6
+-10 --> 0
+```
 
 My solution:
 ```swift
+func triangular(_ n: Int) -> Int{
+    if n <= 0 {
+        return 0
+    }
+    var counter = 0
+    for i in 0...n {
+        counter += i
+    }
+    return counter
+}
 
+triangular(3) // 6
+triangular(4) // 10
+triangular(-10) // 0
+triangular(5) // 15
 ```
 
 Other solutions:
 ```swift
+func triangular(_ n: Int) -> Int{
+    if  n < 0 {
+        return 0
+    }
+    let sum = n * (n + 1) / 2
+    return sum
+}
 
+triangular(3) // 6
+triangular(4) // 10
+triangular(-10) // 0
+```
+
+```swift
+func triangular(_ n: Int) -> Int{
+ return n > 0 ? (1...n).reduce(0,+) : 0
+}
+triangular(3) // 6 -> 0 + 1 + 2 + 3
+triangular(4) // 10 -> 0 + 1 + 2 + 3 + 4
+```
+
+```swift
+func triangular(_ n: Int) -> Int{
+  if (n < 0){
+   return 0
+  }
+  return n + triangular(n - 1)
+}
 ```
 
 
 ---
 
-### []()
+### [Binary Calculator](https://www.codewars.com/kata/546ba103f0cf8f7982000df4)
 
+Вам нужно написать функцию, которая будет получать две строки (n1 и n2), каждая из которых представляет целое число, в виде двоичного числа. Будет предоставлен третий параметр (o) в виде строки, представляющей один из следующих операторов: сложение, вычитание, умножение. Ваша задача состоит в том, чтобы написать функцию вычисления так, чтобы она выполняла арифметические действия, а возвращаемый результат должен быть строкой, представляющей двоичный результат.
 
+```bash
+1 + 1 === 10
+10 + 10 === 100
+1 - 10 === -1
+10 - 100 === -10
+```
+
+Отрицательным двоичным числам обычно предшествует несколько единиц. Для этой ката отрицательные числа могут быть представлены отрицательным символом в начале строки.
 
 My solution:
 ```swift
+enum Operator {
+    case ADD, SUBTRACT, MULTIPLY
+}
 
+func calculate(_ a: String, _ b: String, _ op: Operator) -> String {
+    guard let a = Int(a, radix: 2), let b = Int(b, radix: 2) else { return "Error"}
+    
+    let result: Int
+    
+    switch op {
+    case .ADD:
+        result = a + b
+    case .SUBTRACT:
+        result = a - b
+    case .MULTIPLY:
+        result = a * b
+    }
+    
+    return String(result, radix: 2)
+}
+calculate("1", "1", .ADD) // 10
+calculate("10", "10", .ADD) // 100
+calculate("1", "1", .MULTIPLY) // 1
+calculate("10", "10", .MULTIPLY) // 100
+calculate("10", "10", .SUBTRACT) // 0
+calculate("100", "10", .SUBTRACT) // 10
+
+// Radix — это основание счисления, здесь 2 означает двоичное число
+// из десятичной в двоичную
+let y = String(1, radix: 2) // 1
+let x = String(2, radix: 2) // 10
+let z = String(3, radix: 2) // 11
+let l = String(4, radix: 2) // 100
+// из двоичной в десячичную
+let v = Int("1", radix: 2) // 1
+let b = Int("10", radix: 2) // 2
+let m = Int("11", radix: 2) // 3
 ```
+
+---
+
+### [Counting in the Amazon](https://www.codewars.com/kata/55b95c76e08bd5eef100001e)
+
+The Arara are an isolated tribe found in the Amazon who count in pairs. For example one to eight is as follows:
+
+```bash
+1 = anane
+2 = adak
+3 = adak anane
+4 = adak adak
+5 = adak adak anane
+6 = adak adak adak
+7 = adak adak adak anane
+8 = adak adak adak adak
+```
+
+Take a given number and return the Arara's equivalent.
+
+My solution:
+```swift
+func countArare(_ n: Int) -> String {
+  return n <= 0 ? "" :
+    n == 1 ? "anane" :
+    n == 2 ? "adak" :
+    "adak " + countArare(n-2)
+}
+countArare(1) // "anane"
+countArare(2) // "adak"
+countArare(3) // "adak anane"
+countArare(5) // "adak adak anane"
+```
+
+[joined(separator:)](https://developer.apple.com/documentation/swift/array/joined(separator:)-7uber) - Returns the concatenated elements of this sequence of sequences, inserting the given separator between each element. Работает с Array
 
 Other solutions:
 ```swift
-
+func countArare(_ n: Int) -> String {
+    guard n > 0 else { return "" }
+    var pairs = Array(repeating: "adak", count: n / 2)
+    if n % 2 == 1 {
+      pairs.append("anane")
+    }
+    return pairs.joined(separator: " ")
+}
 ```
 
+```swift
+func countArare(_ n: Int) -> String {
+  return (Array(repeating: "adak", count: n / 2) + Array(repeating: "anane", count: n % 2)).joined(separator:" ")
+}
+```
 
 ---
 
