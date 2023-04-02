@@ -2710,6 +2710,122 @@ dotest(82, 127, 80) // 114
 
 ---
 
+### [Easy wallpaper](https://www.codewars.com/kata/567501aec64b81e252000003)
+
+Джон знает, что прямоугольная комната имеет длину l метров, ширину w метров и высоту h метров. Стандартная ширина рулонов, которые он хочет купить, составляет 52 сантиметра. Длина рулона 10 метров. И на случай ошибки или просчета, купить длину на 15% больше, чем та, которая ему нужна.
+
+`wallpaper(4.0, 3.5, 3.0) should return "ten"`
+
+`wallpaper(0.0, 3.5, 3.0) should return "zero"`
+
+`Площадь стен = периметр комнаты * на высоту потолка`
+
+`P = (a + b) х 2`, где a и b – это ширина и длина комнаты. 
+
+Чтобы получить площадь стен, нужно периметр комнаты умножить на высоту стен.
+
+`Высота стен = P х h`, где h - высота стен.
+
+My solution:
+```swift
+func wallpaper(_ l: Double, _  w: Double,_  h: Double) -> String {
+    let numbers = ["zero", "one", "two", "three", "four", "five",
+               "six", "seven", "eight", "nine", "ten",
+               "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+               "sixteen", "seventeen", "eighteen", "nineteen", "twenty"]
+    let rolls: Int = Int(ceil(((2 * h * (l + w)) / 0.52 / 10.00) * 1.15))
+    // or
+    //     let area: Double = (2 * w * h) + (2 * l * h)
+    //let rolls: Int = Int(ceil(area/0.52/10.00 * 1.15))
+    return l * w * h == 0 ? "zero" : numbers[rolls]
+}
+```
+
+Other solutions:
+```swift
+func wallpaper(_ l: Double, _  w: Double,_  h: Double) -> String {
+    let numbers = ["zero", "one", "two", "three", "four", "five",
+               "six", "seven", "eight", "nine", "ten",
+               "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+               "sixteen", "seventeen", "eighteen", "nineteen", "twenty"]
+    guard l * w * h > 0 else { return "zero" }
+    let wallpaperRolls = ((2 * h * (l + w)) / 0.52 / 10) * 1.15
+    return numbers[Int(wallpaperRolls.rounded(.up))]
+}
+```
+
+---
+
+### [Functional Addition](https://www.codewars.com/kata/538835ae443aae6e03000547)
+
+Create a function `add(n)/Add(n)` which returns a function that always adds n to any number
+
+My solution:
+```swift
+func add(_ n: Int) -> ((Int) -> Int) { 
+  func Add( _ number: Int) -> Int {
+    return n + number
+  }
+  return Add
+}
+```
+
+Other solutions:
+```swift
+func add(_ n: Int) -> ((Int) -> Int) { 
+	return { return $0 + n }
+	// or 
+	//  { $0 + n }
+}
+```
+
+---
+
+### [Lost number in number sequence](https://www.codewars.com/kata/595aa94353e43a8746000120)
+
+Дана упорядоченная последовательность чисел от 1 до N. Из нее удалили один номер, тогда остальные номера были перемешаны. И дана перемешанная последовательность. Найдите номер, который был удален. 
+
+Начальная последовательность массива: `[1,2,3,4,5,6,7,8,9]`. Смешанный массив с одним удаленным числом: `[3,2,4,6,7,8,1,9]`. Ваша функция должна возвращать `int 5`. Если из начального массива не было удалено ни одного числа, ваша функция должна вернуть `int 0`. Примечание `N` может быть равно 1 или меньше (массив будет `[]`)
+
+My solution:
+```swift
+func findDeletedNumber(_ array: [Int], _ mixArray: [Int]) -> Int {
+    return array.reduce(0, +) - mixArray.reduce(0, +)
+}
+
+findDeletedNumber([1,2,3,4,5,6,7,8,9],[3,2,4,6,7,8,1,9]) // 5
+```
+
+Other solutions:
+```swift
+func findDeletedNumber(_ array: [Int], _ mixArray: [Int]) -> Int {
+    guard !array.isEmpty, !mixArray.isEmpty else {
+        return 0
+    }
+    for i in 0..<array.count {
+        if !mixArray.contains(array[i]){
+            return array[i]
+        }
+    }
+    return 0
+}
+```
+
+```swift
+func findDeletedNumber(_ array: [Int], _ mixArray: [Int]) -> Int {
+  for item in array {
+    if !mixArray.contains(item) {
+      return item
+    }
+  }
+  return 0
+}
+```
+
+---
+
+---
+
 ### []()
 
 
@@ -2724,7 +2840,113 @@ Other solutions:
 
 ```
 
+---
+
+---
+
+### []()
 
 
 
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
 
