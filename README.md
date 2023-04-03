@@ -2882,11 +2882,6 @@ angle(3) // 180
 angle(4) // 360
 ```
 
-Other solutions:
-```swift
-
-```
-
 ---
 
 ### [Sum of two lowest positive integers](https://www.codewars.com/kata/558fc85d8fd1938afb000014)
@@ -2948,66 +2943,191 @@ func sumOfTwoSmallestIntegersIn(_ array: [Int]) -> Int {
 ---
 
 
-### []()
+### [Sum of integers in string](https://www.codewars.com/kata/598f76a44f613e0e0b000026)
 
+Вычислить сумму целых чисел внутри строки. Например, в строке `The30quick20brown10f0x1203jumps914ov3r1349the102l4zy dog` сумма целых чисел равна `3635`.
 
+Примечание: будут проверяться только положительные целые числа.
 
 My solution:
 ```swift
-
+func sumOfIntegersInString(_ string: String) -> Int {
+    var result = 0
+    var number = ""
+  
+    for (index, element) in string.enumerated() {
+        if element.isNumber {
+            number += String(element)
+            if index == string.count - 1 {
+                result += Int(number) ?? 0
+            }
+        } else {
+            result += Int(number) ?? 0
+            number = ""
+        }
+    }
+    return result
+}
 ```
 
 Other solutions:
 ```swift
+func sumOfIntegersInString(_ string: String) -> Int {
+    var sum: Int = 0
+    var numberStr: String = ""
+    for character in string {
+        if character.isNumber {
+            numberStr += String(character)
+        }
+        else {
+            if let number = Int(numberStr) {
+                sum += number
+                numberStr = ""
+            }
+        }
+    }
+    
+    if !numberStr.isEmpty {
+        if let number = Int(numberStr) {sum += number}
+    }
+    return sum
+}
 
+```
+
+```swift
+func sumOfIntegersInString(_ string: String) -> Int {
+    string.components(separatedBy: CharacterSet.decimalDigits.inverted).compactMap{ Int($0) }.reduce(0, +)
+}
+```
+
+```swift
+func sumOfIntegersInString(_ string: String) -> Int {
+    return string.split { !$0.isNumber }.compactMap { Int($0) }.reduce(0, +)
+}
+```
+
+```swift
+func sumOfIntegersInString(_ string: String) -> Int {
+  string
+    .map { "0123456789".contains($0) ? "\($0)" : " " }
+    .joined()
+    .components(separatedBy: " ")
+    .compactMap { Int(String($0)) }
+    .reduce(0, +)
+}
 ```
 
 ---
 
-### []()
+### [Odder Than the Rest](https://www.codewars.com/kata/5983cba828b2f1fd55000114)
 
-
+Cоздайте функцию `oddOne`, которая принимает `[Int]` в качестве входных данных и выводит индекс, в котором расположено единственное нечетное число. Этот метод должен работать с массивами с отрицательными числами. Если в массиве нет нечетных чисел, метод должен вывести nil.
 
 My solution:
 ```swift
-
+func oddOne(_ arr: [Int]) -> Int? {
+    for (index, element) in arr.enumerated() {
+        if element % 2 != 0 {
+            return index
+        }
+    }
+    return nil
+}
+oddOne([2,4,6,7,10]) // => 3
+oddOne([2,16,98,10,13,78]) // => 4
+oddOne([4,-8,98,-12,-7,90,100]) // => 4
+oddOne([2,4,6,8]) // => nil
 ```
 
 Other solutions:
 ```swift
+// Complexity: O(n), where n is the length of the collection
 
+func oddOne(_ arr: [Int]) -> Int? {
+    return arr.firstIndex { $0 % 2 != 0 }
+}
 ```
 
 ---
 
-### []()
+### [Billiards triangle](https://www.codewars.com/kata/5bb3e299484fcd5dbb002912)
 
+Помните треугольник шаров в бильярде? Для построения классического треугольника (5 уровней) нужно 15 шаров. Из 3-х шаров можно построить двухуровневый треугольник
 
+Напишите функцию, которая принимает количество шаров (≥ 1) и вычисляет, на скольких уровнях можно построить треугольник.
+
+```bash
+pyramid(1) == 1
+pyramid(3) == 2
+pyramid(6) == 3
+pyramid(10) == 4
+pyramid(15) == 5
+```
 
 My solution:
 ```swift
-
-```
-
-Other solutions:
-```swift
-
+func pyramid(_ balls: Int) -> Int{
+  var balls = balls
+  var level = 0
+  while balls > level {
+    level += 1
+    balls -= level
+  }
+  return level
+}
 ```
 
 ---
 
-### []()
+### [Count the Digit](https://www.codewars.com/kata/566fc12495810954b1000030)
 
+Take an integer `n (n >= 0)` and a digit `d (0 <= d <= 9)` as an integer.
 
+Square all numbers `k (0 <= k <= n)` between 0 and n.
+
+Count the numbers of digits d used in the writing of all the `k**2`.
+
+Implement the function taking n and d as parameters and returning this count
+
+Examples:
+
+```bash
+n = 10, d = 1 
+the k*k are 0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100
+We are using the digit 1 in: 1, 16, 81, 100. The total count is then 4.
+
+The function, when given n = 25 and d = 1 as argument, should return 11 since
+the k*k that contain the digit 1 are:
+1, 16, 81, 100, 121, 144, 169, 196, 361, 441.
+So there are 11 digits 1 for the squares of numbers between 0 and 25.
+Note that 121 has twice the digit 1.
+```
 
 My solution:
 ```swift
+func nbDig(_ n: Int, _ d: Int) -> Int {
+    return (0...n).map{ String($0 * $0).filter{ $0 == Character("\(d)") }}.flatMap{$0}.count
+}
 
+nbDig(10, 1)
 ```
 
 Other solutions:
 ```swift
-
+func nbDig(_ n: Int, _ d: Int) -> Int {
+  var count = 0
+  for x in 0...n {
+    var cube = x * x
+    repeat {
+      if cube % 10 == d {
+        count += 1
+      }
+      cube = cube / 10
+    } while cube >= 1
+  }
+  return count
+}
 ```
 
 ---
