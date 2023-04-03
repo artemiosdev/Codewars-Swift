@@ -2783,7 +2783,7 @@ func add(_ n: Int) -> ((Int) -> Int) {
 
 ### [Lost number in number sequence](https://www.codewars.com/kata/595aa94353e43a8746000120)
 
-Дана упорядоченная последовательность чисел от 1 до N. Из нее удалили один номер, тогда остальные номера были перемешаны. И дана перемешанная последовательность. Найдите номер, который был удален. 
+Дана упорядоченная последовательность чисел от 1 до N. Из нее удалили один номер. И дана перемешанная последовательность из оставшихся цифр. Найдите номер, который был удален. 
 
 Начальная последовательность массива: `[1,2,3,4,5,6,7,8,9]`. Смешанный массив с одним удаленным числом: `[3,2,4,6,7,8,1,9]`. Ваша функция должна возвращать `int 5`. Если из начального массива не было удалено ни одного числа, ваша функция должна вернуть `int 0`. Примечание `N` может быть равно 1 или меньше (массив будет `[]`)
 
@@ -2824,6 +2824,144 @@ func findDeletedNumber(_ array: [Int], _ mixArray: [Int]) -> Int {
 
 ---
 
+### [Mumbling](https://www.codewars.com/kata/5667e8f4e3f572a8f2000039)
+
+Дана строка, вернуть новую строку с увеличением числа каждой буквы в зависимости от числа букв и их положения в строке.
+
+```bash
+accum("abcd") -> "A-Bb-Ccc-Dddd"
+accum("RqaEzty") -> "R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy"
+accum("cwAt") -> "C-Ww-Aaa-Tttt"
+```
+
+My solution:
+```swift
+func accum(_ s: String) -> String {
+  let array = Array(s.lowercased())
+  var result = ""
+  for i in 0..<array.count {
+    for j in 0...i {
+        result += j == 0
+          ? String(array[i]).uppercased()
+          : String(array[i])
+    }
+    if i < array.count - 1 { result += "-" }
+  }
+  return result
+}
+accum("abcd") // A-Bb-Ccc-Dddd
+```
+
+Other solutions:
+```swift
+func accum(_ str: String) -> String {
+    return str.enumerated().map {
+        repeatElement(String($1), count: $0 + 1).joined().capitalized
+    }
+        .joined(separator: "-")
+// or
+//     return str.enumerated().map { String(repeating: $1, count: $0 + 1)
+//    .capitalized }.joined(separator: "-")
+
+}
+```
+
+---
+
+### [Sum of angles](https://www.codewars.com/kata/5a03b3f6a1c9040084001765)
+
+Найдите сумму внутренних углов (в градусах) n-стороннего простого многоугольника. N будет больше 2. Сумма углов.
+
+My solution:
+```swift
+func angle(_ n: Int) -> Int {
+    return 180 * (n - 2)
+}
+
+angle(3) // 180
+angle(4) // 360
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### [Sum of two lowest positive integers](https://www.codewars.com/kata/558fc85d8fd1938afb000014)
+
+Создайте функцию, которая возвращает сумму двух наименьших положительных чисел для заданного массива минимум из 4 положительных целых чисел. Не будут переданы числа с плавающей запятой или неположительные целые числа. Например, когда массив передается как `[19, 5, 42, 2, 77]`, вывод должен быть `7`
+
+My solution:
+```swift
+// The solution using Array.sorted() is O(nlog(n))
+func sumOfTwoSmallestIntegersIn(_ array: [Int]) -> Int {
+    var sortedNumbers: [Int] = array.sorted(by:({$0 < $1}))
+    if sortedNumbers.count < 2 {
+        return sortedNumbers[0]
+    }
+    return sortedNumbers[0] + sortedNumbers[1]
+}
+
+sumOfTwoSmallestIntegersIn([5, 8, 12, 18, 22]) // 13
+sumOfTwoSmallestIntegersIn([5]) // 5
+sumOfTwoSmallestIntegersIn([7, 15, 12, 18, 22]) // 19
+```
+
+Other solutions:
+```swift
+// O(n) solution
+func sumOfTwoSmallestIntegersIn(_ array: [Int]) -> Int {
+    if array.count < 2 { return array[0] }
+    var min1 = Int.max
+    var min2 = Int.max
+    array.forEach {
+        if $0 < min1 {
+            min2 = min1
+            min1 = $0
+        } else if $0 < min2 {
+            min2 = $0
+        }
+    }
+    return min1 + min2
+}
+```
+
+```swift
+func sumOfTwoSmallestIntegersIn(_ array: [Int]) -> Int {
+   if array.count < 2 { return array[0] }
+   let result = array.filter({ $0 >= 0 }).sorted()
+   return result[0] + result[1]
+}
+```
+
+```swift
+// The solution using Array.sorted() is O(nlog(n))
+func sumOfTwoSmallestIntegersIn(_ array: [Int]) -> Int {
+    if array.count < 2 { return array[0] }
+    let sort = array.sorted()
+    return sort[0] + sort[1]
+}
+```
+
+---
+
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
 ---
 
 ### []()
@@ -2842,8 +2980,6 @@ Other solutions:
 
 ---
 
----
-
 ### []()
 
 
@@ -2857,80 +2993,6 @@ Other solutions:
 ```swift
 
 ```
-
----
-
----
-
-### []()
-
-
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
----
-
----
-
-### []()
-
-
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
----
-
----
-
-### []()
-
-
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
----
-
----
-
-### []()
-
-
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
----
 
 ---
 
