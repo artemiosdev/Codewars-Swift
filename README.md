@@ -3132,3 +3132,334 @@ func nbDig(_ n: Int, _ d: Int) -> Int {
 
 ---
 
+### [Descending Order](https://www.codewars.com/kata/5467e4d82edf8bbf40000155)
+
+Ваша задача состоит в том, чтобы создать функцию, которая может принимать любое неотрицательное целое число в качестве аргумента и возвращать его с цифрами в порядке убывания. По сути, переставьте цифры, чтобы получить максимально возможное число. 
+
+```bash
+Input: 42145 Output: 54421
+Input: 145263 Output: 654321
+Input: 123456789 Output: 987654321
+```
+
+My solution:
+```swift
+func descendingOrder(of number: Int) -> Int {
+    return Int(String("\(number)".sorted(by:>))) ?? 0
+    //    return Int(String("\(number)".sorted { $0 > $1 } )) ?? 0
+}
+
+descendingOrder(of: 0) // 0
+descendingOrder(of: 15) // 51
+descendingOrder(of: 123456789) // 987654321
+```
+
+Other solutions:
+```swift
+func descendingOrder(of number: Int) -> Int {
+    let numberAsString = String(number)
+    let orderedNumbers = String(numberAsString.sorted().reversed())
+    
+    return Int(orderedNumbers)!
+}
+```
+
+---
+
+### [Going to the cinema](https://www.codewars.com/kata/562f91ff6a8b77dfe900006e)
+
+My solution:
+```swift
+
+func movie(card: Double, ticket: Double, perc: Double) -> Int {
+  var amount = 0
+  var fullPrice = Double(0)
+  var priceForTicketWithCard = Double(ticket)
+  var totalPriceWithCard = Double(0)
+  while ceil(totalPriceWithCard + card) >= ceil(fullPrice) {
+      fullPrice += ticket
+      priceForTicketWithCard = priceForTicketWithCard * perc
+      totalPriceWithCard += priceForTicketWithCard
+      amount += 1
+  }
+  return amount
+}
+
+movie(card: 500, ticket: 15, perc: 0.9) // 43
+movie(card: 100, ticket: 10, perc: 0.95) // 24
+```
+
+---
+
+### [Heron's formula](https://www.codewars.com/kata/57aa218e72292d98d500240f)
+
+Write function heron which calculates the area of a triangle with sides a, b, and c
+
+**[Формула Герона для площади треугольника](https://2mb.ru/matematika/geometriya/formula-gerona-dlya-ploshhadi-treugolnika/)**
+
+Output should have 2 digits precision
+
+My solution:
+```swift
+func heron(_ a: Double, _ b: Double, _ c: Double) -> Double {
+    let s = (a + b + c) / 2
+    let area = sqrt( s * (s - a) * (s - b) * (s - c) )
+    return (area * 100).rounded() / 100
+}
+heron(5, 6, 7) // 14.7
+```
+
+Other solutions:
+```swift
+func heron(_ a: Double, _ b: Double, _ c: Double) -> Double {
+    let s = (a + b + c ) / 2 // 9
+    let root = sqrt(s * (s - a) * (s - b) * (s - c)) * 100 // 1469.693845669907
+    let result = Double(round(root) / 100) // 14.7
+    return result
+}
+```
+
+---
+
+### [Moves in squared strings (I)](https://www.codewars.com/kata/56dbe0e313c2f63be4000b25)
+
+This kata is the first of a sequence of four about "Squared Strings".
+
+You are given a string of `n` lines, each substring being `n` characters long: For example:
+
+`s = "abcd\nefgh\nijkl\nmnop"`
+
+We will study some transformations of this square of strings.
+
+- Vertical mirror: vert_mirror (or vertMirror or vert-mirror)
+
+`vert_mirror(s) => "dcba\nhgfe\nlkji\nponm"`
+
+- Horizontal mirror: hor_mirror (or horMirror or hor-mirror)
+
+`hor_mirror(s) => "mnop\nijkl\nefgh\nabcd"`
+
+or printed:
+
+```bash
+vertical mirror   |horizontal mirror   
+abcd --> dcba     |abcd --> mnop 
+efgh     hgfe     |efgh     ijkl 
+ijkl     lkji     |ijkl     efgh 
+mnop     ponm     |mnop     abcd 
+```
+
+Task: 
+- Write these two functions
+- high-order function oper(fct, s) where
+- fct is the function of one variable f to apply to the string s (fct will be one of vertMirror, horMirror)
+
+Examples:
+
+```bash
+s = "abcd\nefgh\nijkl\nmnop"
+oper(vert_mirror, s) => "dcba\nhgfe\nlkji\nponm"
+oper(hor_mirror, s) => "mnop\nijkl\nefgh\nabcd"
+```
+
+Note: 
+The form of the parameter fct in oper changes according to the language. You can see each form according to the language in "Sample Tests".
+
+Bash Note: 
+The input strings are separated by , instead of \n. The output strings should be separated by \r instead of \n. See "Sample Tests".
+
+My solution:
+```swift
+func horMirror(_ s: String) -> String {
+    s.components(separatedBy: "\n").reversed().joined(separator:"\n")
+}
+
+func vertMirror(_ s: String) -> String {
+    s.components(separatedBy: "\n").map{ String($0.reversed()) }.joined(separator: "\n")
+}
+
+// replace the dots with function parameter
+func oper(_ fn: (_ s:String) -> String, _ s: String) -> String {
+    return fn(s)
+}
+```
+
+---
+
+### [Number's predecessor and sucessor (retired)](https://www.codewars.com/kata/6059f5a0867077001c6287f8/train/swift)
+
+Write an algorithm that returns a number's predecessor and sucessor.
+
+Expected return format: "Predecessor: n. Sucessor: n"
+
+My solution:
+```swift
+func successorAndPredecessor(of number: Int) -> String {
+  return "Predecessor: \(number - 1). Sucessor: \(number + 1)"
+}
+
+successorAndPredecessor(of: 4) // "Predecessor: 3. Sucessor: 5"
+```
+
+---
+
+
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+
+
