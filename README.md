@@ -3440,66 +3440,158 @@ circleOfNumbers(20, 0) // 10
 
 ---
 
-### []()
+### [Digit*Digit](https://www.codewars.com/kata/546e2562b03326a88e000020/swift)
 
+Необходимо возвести в квадрат каждую цифру числа и соединить их. Функция принимает целое число и возвращает целое число
 
+9119 -> 811181 ( 9^2 is 81 and 1^2 is 1)
 
 My solution:
 ```swift
+func squareDigits(_ num: Int) -> Int {
+    let num = String(num)
+    var stringResult = ""
 
+    for i in num {
+        stringResult += "\( Int( String(i) )! * Int( String(i) )! )"
+    }
+  return Int(stringResult) ?? 0
+}
 ```
 
 Other solutions:
 ```swift
+func squareDigits(_ num: Int) -> Int {
+  return Int(String(num).compactMap { Int(String($0)) }.compactMap { String($0 * $0) }.joined()) ?? 0
+}
+```
 
+```swift
+extension StringProtocol {
+    subscript(offset: Int) -> Character {
+        self[index(startIndex, offsetBy: offset)]
+    }
+}
+
+func squareDigits(_ num: Int) -> Int {
+    let stringNum = String(num)
+    var result = ""
+    var stringValue: Character
+    for index in 0...(stringNum.count - 1) {
+        stringValue = stringNum[index]
+        if let intValue = Int(String(stringValue)) {
+            result += String(intValue * intValue)
+        }
+    }
+    
+    if let intResult = Int(result){
+        return intResult
+    }
+    
+    return 0
+}
 ```
 
 ---
 
-### []()
+### [Doubleton number](https://www.codewars.com/kata/604287495a72ae00131685c7/)
 
+Мы будем называть натуральное число "двойным числом", если оно содержит ровно две разные цифры. Например, 23, 35, 100, 121 являются двойными числами, а 123 и 9980 - нет.
 
+Для заданного натурального числа `n` (от 1 до 1 000 000) вам нужно найти следующее двойное число. Если `n` само по себе является двойным, верните следующее большее, чем `n`
 
 My solution:
 ```swift
+func doubleton(_ num: Int) -> Int {
+    var current = num + 1
+    while !isDoubleton(current) {
+        current += 1
+    }
+    return current
+}
+func isDoubleton(_ n: Int) -> Bool {
+    let digits = Set(String(n))
+    return digits.count == 2
+}
 
-```
-
-Other solutions:
-```swift
-
+doubleton(120) // 121
+doubleton(1234) // 1311
+doubleton(10) // 12
 ```
 
 ---
 
-### []()
+### [Sum of Minimums!](https://www.codewars.com/kata/5d5ee4c35162d9001af7d699)
 
+Учитывая двумерный (вложенный) список (массив) размера `m * n`, ваша задача состоит в том, чтобы найти сумму минимальных значений в каждой строке
 
+```bash
+[ [ 1, 2, 3, 4, 5 ]        #  minimum value of row is 1
+, [ 5, 6, 7, 8, 9 ]        #  minimum value of row is 5
+, [ 20, 21, 34, 56, 100 ]  #  minimum value of row is 20
+]
+```
+
+So the function should `return 26` because the sum of the minimums is `1 + 5 + 20 = 26`.
+
+Note: You will always be given a non-empty list containing positive values
 
 My solution:
 ```swift
+func sumOfMinimums(_ numbers: [[Int]]) -> Int {
+    var minInRows: [Int] = []
+    for row in numbers {
+        minInRows.append(row.min() ?? 0)
+    }
+    
+    var result = 0
+    for i in minInRows {
+        result += i
+    }
+    
+    return result
+}
 
+sumOfMinimums([[2,8,5,4,3], [8,3,4,5,6]]) // 5
+sumOfMinimums([[1,6,3,11,32], [21,32,45,24,34], [8,12,13,6,3]]) // 25
+sumOfMinimums([[7,1,4,3,6],[9,3,13,24,25],[23,35,37,47,56],[12,32,35,58,53],[22,24,35,47,56]]) // 61
 ```
 
 Other solutions:
 ```swift
-
+func sumOfMinimums(_ numbers: [[Int]]) -> Int {
+    return numbers.compactMap{$0.min()}.reduce(0, +)
+}
 ```
 
 ---
 
-### []()
+### [Is It Negative Zero (-0)?](https://www.codewars.com/kata/5c5086287bc6600001c7589a)
 
+There exist two zeroes: `+0` (or just 0) and `-0`.
 
+Write a function that `return true` if the input number is -0 and `return false` otherwise
 
 My solution:
 ```swift
-
+func isNegativeZero(_ n: Float) -> Bool {
+  return String(n) == "-0.0"
+  // or
+  // n.description == "-0.0"
+}
 ```
 
 Other solutions:
 ```swift
+func isNegativeZero(_ n: Float) -> Bool {
+  return n == 0 && n.sign == .minus
+}
+```
 
+```swift
+func isNegativeZero(_ n: Float) -> Bool {
+  return n == 0 && 1 / n == -Float.infinity
+}
 ```
 
 ---
