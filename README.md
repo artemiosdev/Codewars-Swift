@@ -3303,66 +3303,139 @@ successorAndPredecessor(of: 4) // "Predecessor: 3. Sucessor: 5"
 
 ---
 
+### [Over The Road](https://www.codewars.com/kata/5f0ed36164f2bc00283aed07)
 
+Вы только что въехали на совершенно прямую улицу с ровно n одинаковыми домами по обеим сторонам дороги. Естественно, вы хотели бы узнать номер дома людей на другой стороне улицы. Улица выглядит примерно так:
 
+```bash
+Street
+1|   |6
+3|   |4
+5|   |2
+  you
+```
 
+События увеличиваются справа; коэффициенты уменьшаются слева. Номера домов начинаются с 1 и увеличиваются без пробелов. Когда n = 3, 1 противоположно 6, 3 противоположно 4, а 5 противоположно 2
+
+Пример (адрес, n --> output) Учитывая адрес вашего дома и длину улицы n, укажите номер дома на противоположной стороне улицы.
+
+```bash
+1, 3 --> 6
+3, 3 --> 4
+2, 3 --> 5
+3, 5 --> 8
+```
 
 My solution:
 ```swift
-
-```
-
-Other solutions:
-```swift
-
+func overTheRoad(address: Int, street: Int) -> Int {
+  return street * 2 + 1 - address
+  // or
+  // address == 1 ? street * 2 : street * 2 - (address - 1)
+}
+}
 ```
 
 ---
 
-### []()
+### [Printer Errors](https://www.codewars.com/kata/56541980fa08ab47a0000040)
 
+На фабрике принтер печатает этикетки для коробок. Для одного вида коробок принтеру приходится использовать цвета, которые для простоты обозначаются буквами от `а` до `м`.
 
+Цвета, используемые принтером, записываются в управляющую строку. Например, "хорошей" управляющей строкой была бы `aaabbbbhaijjjm`, означающая, что принтер использовал три раза цвет a, четыре раза цвет b, один раз цвет h, затем один раз цвет a...
+
+Иногда возникают проблемы: отсутствие цветов, техническая неисправность и выдается "плохая" управляющая строка, например, `aaaxbbbbyyhwawiwjjjwwm` с буквами не от `a` до `m`.
+
+Вы должны написать функцию `printer_error`, которая при заданной строке вернет частоту ошибок принтера в виде строки, представляющей рациональное число, числителем которого является количество ошибок, а знаменателем - длина управляющей строки. Не сводите эту дробь к более простому выражению.
+
+Строка имеет длину, большую или равную единице, и содержит только буквы от `a` до `z`.
+
+```bash
+s="aaabbbbhaijjjm"
+printer_error(s) => "0/14"
+
+s="aaaxbbbbyyhwawiwjjjwwm"
+printer_error(s) => "8/22"
+```
 
 My solution:
 ```swift
-
+func printerError(_ s: String) -> String {
+    return "\(s.count - s.filter(("a"..."m").contains).count)/\(s.count)"
+}
 ```
 
 Other solutions:
 ```swift
+func printerError(_ s: String) -> String {
+    let errors = s.filter { $0 > "m" }
+    return "\(errors.count)/\(s.count)"
+}
+```
 
+```swift
+func printerError(_ s: String) -> String {
+    var count = 0
+    for c in s {
+        count += ("a"..."m").contains(c) ? 0 : 1
+    }
+    return "\(count)/\(s.count)"
+}
 ```
 
 ---
 
-### []()
+### [Shortest Word](https://www.codewars.com/kata/57cebe1dc6fdc20c57000ac9)
 
-
+Просто, учитывая строку слов, вернуть длину самого кратчайшего/маленького слова (слов). Строка никогда не будет пустой, и вам не нужно учитывать разные типы данных
 
 My solution:
 ```swift
+func find_short(_ str: String) -> Int {
+    return str.split(separator: " ").sorted{ $0.count < $1.count }[0].count
+    // or
+    // return str.split(separator: " ").min(by: {$0.count < $1.count})!.count
+}
 
-```
-
-Other solutions:
-```swift
-
+find_short("bitcoin take over the world maybe who knows perhaps") // 3
 ```
 
 ---
 
-### []()
+### [Simple Fun #2: Circle of Numbers](https://www.codewars.com/kata/58841cb52a077503c4000015)
 
+Рассмотрим целые числа от `0` до `n - 1`, записанные вдоль окружности таким образом, чтобы расстояние между любыми двумя соседними числами было равным (обратите внимание, что `0` и `n - 1` тоже являются соседними).
 
+Учитывая `n` и `firstNumber`, найдите число, которое записано в позиции, радиально противоположной `firstNumber`.
+
+Пример: 
+Для `n = 10` и `firstNumber` = 2 результат должен быть равен 7
+
+<img alt="image" src="images/Simple Fun 2 Circle of Numbers.jpeg" width = 60% />
+
+[input] integer `n`
+
+A positive even integer.
+
+Constraints: `4 ≤ n ≤ 1000`.
+
+[input] integer `firstNumber`
+
+Constraints: `0 ≤ firstNumber ≤ n - 1`
+
+[output] an integer
 
 My solution:
 ```swift
+func circleOfNumbers(_ n: Int, _ fst: Int) -> Int {
+    return (n / 2 + fst) % n
+}
 
-```
-
-Other solutions:
-```swift
-
+circleOfNumbers(10, 2) // 7
+circleOfNumbers(10, 7) // 2
+circleOfNumbers(4, 1) // 3
+circleOfNumbers(6, 3) // 0
+circleOfNumbers(20, 0) // 10
 ```
 
 ---
