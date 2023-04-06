@@ -3596,6 +3596,173 @@ func isNegativeZero(_ n: Float) -> Bool {
 
 ---
 
+### [Alphabetical Addition](https://www.codewars.com/kata/5d50e3914861a500121e1958)
+
+Your task is to add up letters to one letter.
+
+The function will be given an `Array<Character>`, each one being a letter to add, and the function will return a Character.
+
+Notes:
+
+- Letters will always be lowercase.
+- Letters can overflow (see second to last example of the description)
+- If no letters are given, the function should return 'z'
+
+Examples:
+```bash
+addLetters(["a", "b", "c"]) = "f"
+addLetters(["a", "b"]) = "c"
+addLetters(["z"]) = "z"
+addLetters(["z", "a"]) = "a"
+addLetters(["y", "c", "b"]) = "d" // notice the letters overflowing
+addLetters([]) = "z"
+```
+
+My solution:
+```swift
+func addLetters(_ letters: [Character]) -> Character {
+    let dictionary: [Character : Int] = ["a" : 1, "b" : 2, "c" : 3, "d" : 4, "e" : 5, "f" : 6, "g" : 7, "h" : 8, "i" : 9, "j" : 10, "k" : 11, "l" : 12, "m" : 13, "n" : 14, "o" : 15, "p" : 16, "q" : 17, "r" : 18, "s" : 19, "t" : 20, "u" : 21, "v" : 22, "w" : 23, "x" : 24, "y" : 25, "z" : 26]
+     
+     var sum = 0
+     
+     for letter in letters {
+       sum += dictionary[(letter)] ?? 0
+     }
+     while sum > 26 {
+       sum = sum - 26
+     }
+     
+     for (key, value) in dictionary {
+       if value == sum {
+         return key
+       }
+     }
+     return "z"
+}
+
+print(addLetters(["a", "b", "c"])) // Output: f
+print(addLetters(["a", "b"])) // Output: c
+print(addLetters(["z"])) // Output: z
+print(addLetters(["z", "a"])) // Output: a
+print(addLetters(["y", "c", "b"])) // Output: d
+print(addLetters([])) // Output: z
+```
+
+---
+
+### [Minimum Perimeter of a Rectangle](https://www.codewars.com/kata/5826f54cc60c7e5266000baf)
+
+Прямоугольник может быть определен двумя факторами: высотой и шириной.
+
+Его площадь определяется как умножение двух значений: `высота * ширина`.
+
+Его периметр равен сумме его четырех ребер: `высота + высота + ширина + ширина`.
+
+Можно создавать прямоугольники одинаковой площади, но разных периметров. Например, учитывая площадь 45, возможные высоты, ширины и результирующие периметры будут следующими:
+
+```bash
+(1, 45) = 92
+(9, 5) = 28
+(15, 3) = 36
+```
+
+Задача написать функцию, которая, учитывая площадь в виде целого положительного числа, возвращает наименьший возможный периметр прямоугольника с целыми длинами сторон.
+
+Диапазон входного сигнала: 
+`1 <= площадь <= 5 x 10 ^ 10`
+
+My solution:
+```swift
+func minimumPerimeter(_ area: Int64) -> Int64 {
+    var minPerimeter: Int64 = Int64.max
+    for height in 1...Int64(sqrt(Double(area))) {
+        if area % height == 0 {
+            let width = area / height
+            let perimeter = (height + width) * 2
+            minPerimeter = min(minPerimeter, perimeter)
+        }
+    }
+    return minPerimeter
+}
+
+minimumPerimeter(45) // 28
+minimumPerimeter(30) // 22
+minimumPerimeter(81) // 36
+minimumPerimeter(89) // 180
+minimumPerimeter(10000019) // 20000040
+minimumPerimeter(982451653) // 1964903308
+```
+
+Other solutions:
+```swift
+func minimumPerimeter(_ area: Int64) -> Int64 {
+    var width = Int64(sqrt(Double(area)))
+    
+    while area % width != 0 {
+        width -= 1
+    }
+    
+    return width * 2 + area / width * 2
+}
+```
+
+---
+
+### [Drone Fly-By](https://www.codewars.com/kata/58356a94f8358058f30004b5)
+
+Вам будут даны две строки: лампы и дрона. Лампы представляют собой ряд ламп, в данный момент выключенных, каждая из которых обозначена символом `x`. Когда эти лампы включены, они должны быть обозначены символом `o`.
+
+Строка дрона представляет положение дрона `T`, а траектория его полета вплоть до этой точки в виде `===`. Всегда летит слева направо и всегда начинается с начала ряда ламп. В любом месте, где пролетел беспилотник, включая его текущее местоположение, лампа в этом положении включится в `o`.
+
+Верните строку `lamps` c включенныеми лампами. 
+
+My solution:
+```swift
+func flyBy(lamps: String, drone: String) -> String {
+    let lampsArray = Array(lamps)
+    var result = ""
+    for (index, lamp) in lampsArray.enumerated() {
+        if index <= drone.count-1 {
+            result += "o"
+        } else {
+            result += "\(lamp)"
+        }
+    }
+    return result
+}
+
+flyDrone(lamps: "xxxxxx", drone: "====T") // ooooox
+flyDrone(lamps: "xxxxxx", drone: "====T") // "ooooox"
+flyDrone(lamps: "xxxxxxxxx", drone: "==T") // "oooxxxxxx"
+flyDrone(lamps: "xxxxxxxxxxxxxxx", drone: "=========T") // "ooooooooooxxxxx"
+```
+
+Other solutions:
+```swift
+func flyBy( lamps: String, drone: String) -> String {
+    return String(repeating: "o", count: drone.count) + String(repeating: "x", count: (lamps.count - drone.count))
+}
+```
+
+```swift
+func flyBy(lamps: String, drone: String) -> String {
+    let lampsNum = lamps.count - 1
+    let drone = drone.count
+    var newString = ""
+    
+    for i in 0...lampsNum {
+        if i < drone {
+            newString += "o"
+        } else {
+            newString += "x"
+        }
+    }
+  return "\(newString)"
+}
+```
+
+---
+
 ### []()
 
 
@@ -3626,5 +3793,100 @@ Other solutions:
 
 ```
 
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
 
 
