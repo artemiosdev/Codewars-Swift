@@ -3763,18 +3763,204 @@ func flyBy(lamps: String, drone: String) -> String {
 
 ---
 
-### []()
+### [Spacify](https://www.codewars.com/kata/57f8ee485cae443c4d000127)
 
+Измените функцию spacify, чтобы она возвращала заданную строку с пробелами spaces, вставленными между каждым символом 
 
+`spacify("hello world") // "h e l l o   w o r l d"`
 
 My solution:
 ```swift
+func spacify(_ str: String) -> String {
+    var result = ""
+    for i in str {
+        result += "\(i) "
+    }
+    // возврат с удалением последнего символа
+    return String(result.dropLast())
+}
 
+spacify("12345") // 1 2 3 4 5
+spacify("") // ""
+spacify("hello world") // h e l l o   w o r l d
 ```
 
 Other solutions:
 ```swift
+func spacify(_ str: String) -> String {
+    return str.map { String($0) }.joined(separator: " ")
+}
+```
 
+---
+
+### [Count the divisors of a number](https://www.codewars.com/kata/542c0f198e077084c0000c2e)
+
+Подсчитайте количество делителей натурального числа `n`
+
+```bash
+4 --> 3 (1, 2, 4)
+5 --> 2 (1, 5)
+12 --> 6 (1, 2, 3, 4, 6, 12)
+30 --> 8 (1, 2, 3, 5, 6, 10, 15, 30)
+```
+
+My solution:
+```swift
+func divisors(_ n: UInt32) -> UInt32 {
+    var count: UInt32 = 0
+    for i in 1...n {
+        if n % i == 0 {
+            count += 1
+        }
+    }
+    return count
+}
+
+divisors(4) // 3 (1, 2, 4)
+divisors(5) // 2 (1, 5)
+divisors(12) // 6 (1, 2, 3, 4, 6, 12)
+divisors(30) // 8 (1, 2, 3, 5, 6, 10, 15, 30)
+```
+
+Other solutions:
+```swift
+func divisors(_ n: UInt32) -> UInt32 {
+    return UInt32((1...n).filter { n.isMultiple(of: $0) }.count)
+}
+```
+
+---
+
+### [Fizz Buzz Cuckoo Clock](https://www.codewars.com/kata/58485a43d750d23bad0000e6)
+
+Когда минуты будет равномерно делиться на три, часы произнесут слово "Шипение".
+
+Когда минуты будет равномерно делиться на пять, часы произнесут слово "Гудение".
+
+Когда минуты делятся поровну на оба, часы будут показывать "Шипение-жужжание", за двумя исключениями:
+В назначенный час вместо "Шипящего гудения" дверца часов откроется, и птица-кукушка выйдет и прокукарекает от одного до двенадцати раз в зависимости от часа.
+
+Через полчаса, вместо "Шипящего гудения", дверца часов откроется, и кукушка выйдет и "Ку-ку" только один раз.
+
+С минутами, которые неравномерно делятся ни на три, ни на пять, сначала вы намеревались, чтобы часы просто произносили цифры ala Fizz Buzz, но затем вы решили, по крайней мере, для версии 1.0, чтобы часы просто издавали тихий, едва уловимый звук "тиканья", чтобы немного больше походить на часы и немного меньше шума.
+
+Вашими входными данными будет строка, содержащая значения часов и минут в 24-часовом времени, разделенные двоеточием и с начальными нулями. Например, 1:34 вечера будет означать "13:34".
+
+Вашим возвращаемым значением будет строка, содержащая комбинацию звуков шипения, гудения, кукования кукушки и / или тиканья, которые часы должны издавать в указанное время, разделенных пробелами. Обратите внимание, что, хотя входные данные указаны в 24-часовом времени, часы с кукушкой показывают 12-часовое время.
+
+```bash
+"13:34"       "tick"
+"21:00"       "Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo"
+"11:15"       "Fizz Buzz"
+"03:03"       "Fizz"
+"14:30"       "Cuckoo"
+"08:55"       "Buzz"
+"00:00"       "Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo"
+"12:00"       "Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo Cuckoo"
+```
+
+My solution:
+```swift
+func fizzBuzzCuckooClock(_ time: String) -> String {
+    let components = time.components(separatedBy: ":")
+    guard let hour = Int(components[0]), let minute = Int(components[1]) else {
+        return "Invalid time format"
+    }
+    
+    if minute == 0 {
+        var cuckooCount = hour % 12 // Convert to 12-hour time
+        if cuckooCount == 0 {
+            cuckooCount = 12
+        }
+        return String(repeating: "Cuckoo ", count: cuckooCount).trimmingCharacters(in: .whitespaces)
+    }
+    
+    if minute == 30 {
+        return "Cuckoo"
+    }
+    
+    var output = ""
+    if minute % 3 == 0 {
+        output += "Fizz "
+    }
+    if minute % 5 == 0 {
+        output += "Buzz "
+    }
+    if output.isEmpty {
+        output = "tick"
+    }
+    
+    return output.trimmingCharacters(in: .whitespaces)
+}
+```
+
+Other solutions:
+```swift
+func fizzBuzzCuckooClock(_ time: String) -> String {
+    let a = time.components(separatedBy: ":")
+    guard let hrs = Int(a[0]), let min = Int(a[1]) else { return "Invalid time format" }
+
+    switch min {
+        case 0:
+            return Array(repeating: "Cuckoo", count: (hrs + 11) % 12 + 1 ).joined(separator: " ")
+        case 30:
+            return "Cuckoo"
+        case let x where x % 15 == 0:
+            return "Fizz Buzz"
+        case let x where x % 3 == 0:
+            return "Fizz"
+        case let x where x % 5 == 0:
+            return "Buzz"
+        default:
+            return "tick"
+    }
+}
+```
+
+---
+
+### [Waiting room](https://www.codewars.com/kata/542f0c36d002f8cd8a0005e5)
+
+Там есть зал ожидания с N стульями, расставленными в один ряд. Стулья последовательно пронумерованы от 1 до N. Первый находится ближе всего ко входу (который также является выходом).
+
+По какой-то причине люди выбирают стул следующим образом
+
+Найдите место как можно дальше от других людей
+
+Найдите место как можно ближе к выходу
+
+Все стулья должны быть заняты до того, как будет подан первый заказ
+
+Итак, это выглядит так для 10 стульев и 10 пациентов
+
+```bash
+Chairs  Patients	
+1          1  
+2           7  
+3           5   
+4           8   
+5           3    
+6           9   
+7           4   
+8           6    
+9          10    
+10         2
+```
+
+Ваша задача - найти номер кресла последнего пациента.
+
+Входные данные: количество стульев N, целое число, большее 2.
+
+Вывод: целое положительное число, номер стула последнего пациента.
+
+Kata странная как и ее решение
+
+My solution:
+```swift
+func lastChair(_ n: Int) -> Int {
+   return n-1
+}
 ```
 
 ---
@@ -3840,53 +4026,4 @@ Other solutions:
 ```swift
 
 ```
-
----
-
-### []()
-
-
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
----
-
-### []()
-
-
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
----
-
-### []()
-
-
-
-My solution:
-```swift
-
-```
-
-Other solutions:
-```swift
-
-```
-
 
