@@ -3965,34 +3965,126 @@ func lastChair(_ n: Int) -> Int {
 
 ---
 
-### []()
+### [Partial Word Searching](https://www.codewars.com/kata/54b81566cd7f51408300022d)
 
+Напишите метод, который будет искать в массиве строк все строки, содержащие другую строку, игнорируя заглавные буквы. Затем верните массив найденных строк.
+
+Метод принимает два параметра, строку запроса и массив строк для поиска, и возвращает массив.
+
+Если строка не содержится ни в одной из строк массива, метод возвращает массив, содержащий одну строку: "Empty".
+
+Примеры: 
+Если строка для поиска - `me`, а массив для поиска - `["home", "milk", "Mercury", "fish"]`, метод должен возвращать `["home", "Mercury"]`.
 
 
 My solution:
 ```swift
+func wordSearch(_ str:String, _ arr:[String]) -> [String] {
+    var result: [String] = []
+    for i in arr {
+        if i.lowercased().contains(str.lowercased()) {
+            result.append(i)
+        }
+        else {
+            continue
+        }
+    }
+    if result.isEmpty { result.append("Empty") }
+    return result
+}
 
+wordSearch("me", ["home", "milk", "Mercury", "fish"]) // ["home", "Mercury"]
+wordSearch("a", ["b", "c", "d"]) // ["Empty"]
 ```
 
 Other solutions:
 ```swift
+func wordSearch(_ str:String, _ arr:[String]) -> [String] {
+  let results = arr.filter { $0.localizedCaseInsensitiveContains(str) }
+  return results.isEmpty ? ["Empty"] : results
+}
+```
 
+```swift
+func wordSearch(_ str:String, _ arr:[String]) -> [String] {
+    let result = arr.filter{ $0.lowercased().contains(str.lowercased()) }
+    return result.isEmpty ? ["Empty"] : result
+}
 ```
 
 ---
 
-### []()
+### [Correct the time-string](https://www.codewars.com/kata/57873ab5e55533a2890000c7)
 
+Вы должны создать метод, который корректирует заданную временную строку.
 
+Кроме того, возникла проблема, из-за которой многие временные цепочки были разорваны.
+
+Время отформатировано с использованием 24-часовых часов, то есть с 00:00:00 до 23:59:59.
+
+```bash
+Примеры
+"09:10:01" -> "09:10:01"
+"11:70:10" -> "12:10:10"
+"19:99:99" -> "20:40:39"
+"24:01:01" -> "00:01:01"
+```
+
+Если входная строка равна nil или пуста, верните именно это значение!  Если формат временной строки недопустим, верните значение nil
 
 My solution:
 ```swift
+func correct(_ timeString: String?) -> String? {
+    if timeString?.isEmpty == true { return timeString }
+    guard let timeTheString = timeString else { return timeString }
+    let timeComponents = timeTheString.components(separatedBy: ":")
+    guard timeComponents.count == 3,
+          let hour = Int(timeComponents[0]),
+          let minute = Int(timeComponents[1]),
+          let second = Int(timeComponents[2]) else { return nil }
+    
+    var correctedHour = hour
+    var correctedMinute = minute
+    var correctedSecond = second
+    if correctedSecond >= 60 {
+        correctedSecond -= 60
+        correctedMinute += 1
+    }
+    if correctedMinute >= 60 {
+        correctedMinute -= 60
+        correctedHour += 1
+    }
+    if correctedHour >= 24 {
+        correctedHour -= 24
+    }
+    return String(format: "%02d:%02d:%02d", correctedHour, correctedMinute, correctedSecond)
+}
 
+print(correct("09:10:01")) // Output: "09:10:01"
+print(correct("11:70:10")) // Output: "12:10:10"
+print(correct("19:99:99")) // Output: "20:40:39"
+print(correct("24:01:01")) // Output: "00:01:01"
+print(correct("invalid time string")) // Output: nil
+print(correct("28:01:01")) //Output: "04:01:01"
+print(correct("")) //Output: ""
 ```
 
 Other solutions:
 ```swift
-
+func correct(_ timeString: String?) -> String? {
+    guard let time = timeString, time.isEmpty == false
+        else { return timeString }
+    
+    let numbers = time.components(separatedBy: ":").flatMap({Int($0)})
+    guard numbers.count == 3
+        else { return nil }
+    
+    let timestamp = numbers[2] + numbers[1]*60 + numbers[0]*3600
+    let hours = (timestamp/3600)%24
+    let minutes = (timestamp/60)%60
+    let seconds = timestamp % 60
+    return "\(String(format: "%02d", hours)):\(String(format: "%02d",minutes)):\(String(format: "%02d",seconds))"
+}
 ```
 
 ---
