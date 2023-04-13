@@ -4089,6 +4089,201 @@ func correct(_ timeString: String?) -> String? {
 
 ---
 
+### [Sum of odd numbers](https://www.codewars.com/kata/55fd2d567d94ac3bc9000064)
+
+Дан треугольник последовательных нечетных чисел:
+
+<img alt="image" src="images/triangle of consecutive odd numbers.jpeg"/>
+
+Вычислите сумму чисел в n-й строке этого треугольника (начиная с индекса 1), например: 
+
+`1 --> 1`
+
+`2 --> 3 + 5 = 8`
+
+My solution:
+```swift
+func rowSumOddNumbers(_ row: Int) -> Int {
+  return row * row * row
+}
+```
+
+---
+
+### [Find the nth Digit of a Number](https://www.codewars.com/kata/577b9960df78c19bca00007e)
+
+Завершите функцию, которая принимает два числа в качестве входных данных, num и nth, и возвращает n-ю цифру num (считая справа налево).
+
+- Если число отрицательное, игнорируйте его знак и рассматривайте его как положительное значение. 
+- Если nth не положительное, вернуть -1 
+- Имейте в виду, что 42 = 00042. Это означает, что findDigit(42, 5) вернет 0
+
+```bash
+5673, 4 --> 5
+129, 2 --> 2
+-2825, 3 --> 8
+-456, 4 --> 0
+0, 20 --> 0
+65, 0 --> -1
+24, -8 --> -1
+```
+
+My solution:
+```swift
+func findDigit(_ num:Int, _ nth: Int) -> Int {
+    if nth <= 0 {
+        return -1
+    }
+    if nth > Int(String(num).count) {
+        return 0
+    }
+    let string = String(String(num).reversed())
+    let array = Array(string)
+    let result = array[nth - 1]
+    return Int(String(result))!
+}
+
+findDigit(24, -8) // -1
+findDigit(65, 0) // -1
+findDigit(0, 20) // 0
+findDigit(-5673, 4) // 5
+```
+
+Other solutions:
+```swift
+func findDigit(_ num: Int, _ nth: Int) -> Int {
+  let positive = abs(num)
+  
+  guard nth > 0 else { return -1 }
+  guard positive > 0 else { return 0 }
+  guard nth > 1 else { return positive % 10 }
+  
+  return findDigit(positive / 10, nth - 1)
+}
+```
+
+
+---
+
+### [ToLeetSpeak](https://www.codewars.com/kata/57c1ab3949324c321600013f)
+
+Ваша задача — написать функцию toLeetSpeak, которая преобразует обычное английское предложение в литспик. Подробнее о LeetSpeak Вы можете прочитать на wiki -> https://en.wikipedia.org/wiki/Leet Учитывайте только прописные буквы (без строчных букв и цифр) и пробелы
+
+`toLeetSpeak("LEET") returns "1337"`
+
+My solution:
+```swift
+func toLeetSpeak(_ s : String) -> String {
+  var returnString: String = ""
+  for letter in s{
+    switch letter {
+      case "A" : returnString += "@"
+      case "B" : returnString += "8"
+      case "C" : returnString += "("
+      case "D" : returnString += "D"
+      case "E" : returnString += "3"
+      case "F" : returnString += "F"
+      case "G" : returnString += "6"
+      case "H" : returnString += "#"
+      case "I" : returnString += "!"
+      case "J" : returnString += "J"
+      case "K" : returnString += "K"
+      case "L" : returnString += "1"
+      case "M" : returnString += "M"
+      case "N" : returnString += "N"
+      case "O" : returnString += "0"
+      case "P" : returnString += "P"
+      case "Q" : returnString += "Q"
+      case "R" : returnString += "R"
+      case "S" : returnString += "$"
+      case "T" : returnString += "7"
+      case "U" : returnString += "U"
+      case "V" : returnString += "V"
+      case "W" : returnString += "W"
+      case "X" : returnString += "X"
+      case "Y" : returnString += "Y"
+      case "Z" : returnString += "2"
+      case " " : returnString += " "
+      default : break
+    }
+  }
+  return returnString
+}
+```
+
+Other solutions:
+```swift
+let dict : [Character : Character] =
+    [   "A" : "@",
+        "B" : "8",
+        "C" : "(",
+        "E" : "3",
+        "G" : "6",
+        "H" : "#",
+        "I" : "!",
+        "L" : "1",
+        "O" : "0",
+        "S" : "$",
+        "T" : "7",
+        "Z" : "2",
+]
+
+func toLeetSpeak(_ s : String) -> String {
+  return String(s.map { dict[$0] ?? $0 })
+}
+```
+
+---
+
+### [Numbers with this digit inside](https://www.codewars.com/kata/57ad85bb7cb1f3ae7c000039)
+
+Вам нужно найти все числа от 1 включительно до заданного числа `x` включительно, в котором есть заданная цифра `d`. Значение `d` всегда будет от 0 до 9. Значение `x` всегда будет больше 0.
+
+You have to return as an array
+
+- the count of these numbers,
+- their sum
+- and their product (*)
+
+For example:
+
+```bash
+x = 11
+d = 1
+->
+Numbers: 1, 10, 11
+Return: [3, 22, 110]
+```
+
+My solution:
+```swift
+func numbersWithDigitInside(_ x: Long, _ d: Long) -> [Long] {
+  let r = (1...x).filter({String($0).contains(String(d))})
+  return r.count > 0 ? [Int64(r.count), r.reduce(0,+), r.reduce(1,*)] : [0,0,0]
+}
+```
+
+Other solutions:
+```swift
+typealias Long = Int64
+
+let empty: [Long] = [0, 0, 0]
+
+func numbersWithDigitInside(_ x: Long, _ d: Long) -> [Long] {
+  guard x > 0 else { return empty }
+  guard (0...9).contains(d) else { return empty }
+  
+  let value = String(d)
+  let numbers = (1...x).filter { String($0).contains(value) }
+  return [Long(numbers.count), 
+      numbers.reduce(Long(0), +), 
+      numbers.count > 0 ? numbers.reduce(Long(1), *) : 0
+  ]
+}
+```
+
+---
+
 ### []()
 
 
@@ -4118,4 +4313,75 @@ Other solutions:
 ```swift
 
 ```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+---
+
+### []()
+
+
+
+My solution:
+```swift
+
+```
+
+Other solutions:
+```swift
+
+```
+
+
+
+
+
+
+
 
